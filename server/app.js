@@ -1,0 +1,49 @@
+const express = require('express');
+const app = express();
+require('dotenv').config();
+
+const passport = require('passport');
+const LocalStrategy = require('./config/passport/strategies/local')
+const JwtStrategy = require('./config/passport/strategies/jwt');
+
+const db = require('./config/dbConfig');
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+passport.use(LocalStrategy);
+passport.use(JwtStrategy);
+app.use(passport.initialize());
+
+//const populateDB = require('./populateDB')
+
+const testMiddle = (req, res, next) => {
+    console.log('logger')
+    
+    if(req.headers.authorization) {
+        console.log('Authorization Token Exists')
+    }
+
+    next()
+}
+
+app.use(testMiddle)
+
+//<----- ROUTES HERE ----->
+app.get('/', (req, res) => {
+    res.status(200).json('API Working')
+});
+
+const authenticationRoute = require('./routes/authentication_route');
+app.use('/auth', authenticationRoute)
+
+const postsRouter = require('./routes/posts_route') //will require auth
+app.use('/posts', passport.authenticate('jwt', {session: false}), postsRouter)
+
+const userRouter = require('./routes/user_route'); //will require auth
+app.use('/user', userRouter)
+
+
+const PORT = process.env.port || '5000';
+
+app.listen(PORT, () => {console.log(`App listening on port ${PORT}`)})
