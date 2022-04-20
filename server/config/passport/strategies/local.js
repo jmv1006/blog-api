@@ -9,7 +9,7 @@ module.exports = new LocalStrategy((username, password, done) => {
         return done(err);
       }
       if (!user) {
-        return done(null, false, { message: "Incorrect username" });
+        return done(null, false, { message: "Incorrect Username" });
       }
       bcrypt.compare(password, user.password, (err, res) => {
         if (res) {
@@ -17,7 +17,7 @@ module.exports = new LocalStrategy((username, password, done) => {
           return done(null, user)
         } else {
           // passwords do not match!
-          return done(null, false, { message: "Incorrect password" })
+          return done(null, false, { message: "Incorrect Password" })
         }
       });
     });

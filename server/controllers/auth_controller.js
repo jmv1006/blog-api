@@ -2,26 +2,34 @@ const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const Joi = require('joi')
-
+const passport = require('passport')
 
 exports.post_sign_in = (req, res) => {
+    passport.authenticate('local', {session: false}, (err, user, info) => {
+        if(err) {
+            return res.status(400).json('Error Authenticating User')
+        }
 
-    const tokenUser = {
-        _id: req.user._id,
-        displayName: req.user.displayName,
-        username: req.user.username,
-        isAdmin: req.user.isAdmin
-    }
+        if(!user) {
+            return res.status(400).json(info)
+        }
+        
+        const tokenUser = {
+            _id: user._id,
+            displayName: user.displayName,
+            username: user.username,
+            isAdmin: user.isAdmin
+        }
+        
+        const secret = process.env.TOKEN_SECRET
+        const token = jwt.sign({user: tokenUser}, secret, {expiresIn:'30m'});
     
-    const secret = process.env.TOKEN_SECRET
-    const token = jwt.sign({user: tokenUser}, secret, {expiresIn:'1h'});
-
-    return res.status(200).json({
-        message: 'Auth Passed',
-        token: token
-    })
-    //sanitize and validate
-}
+        return res.status(200).json({
+            message: 'Auth Passed',
+            token: token
+        })
+    })(req, res)
+};
 
 exports.post_sign_up = (req, res) => {
     //validate
@@ -100,3 +108,4 @@ exports.post_sign_up = (req, res) => {
         })
     })
 };
+
