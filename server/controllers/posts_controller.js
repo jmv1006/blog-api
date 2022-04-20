@@ -54,6 +54,7 @@ exports.delete_post = (req, res) => {
     })
 };
 
+//<---- GET all comments for post ---->
 exports.get_post_comments = (req, res) => {
     Comment.find({postId: req.params.postId}, (err, comments) => {
         if(err) {
@@ -63,8 +64,8 @@ exports.get_post_comments = (req, res) => {
     })
 };
 
+//<----- Create new comment ----->
 exports.create_comment = (req, res) => {
-
     const newComment = new Comment({
         postId: req.params.postId,
         text: req.body.text,
@@ -78,5 +79,19 @@ exports.create_comment = (req, res) => {
         }
         res.status(200).json('Succesfully created new comment')
     }))
+};
+
+//<-----  delete comment ----->
+exports.delete_comment = (req, res) => {
+    if(req.user.isAdmin) {
+        Comment.findByIdAndDelete(req.params.commentId, (error) => {
+            if(error) {
+                return res.status(400).json('Error deleting comment')
+            }
+            return res.status(200).json('Succesfully deleted comment')
+        })
+    } else {
+        return res.status(401).json('Only admins can delete comments')
+    }
 
 }

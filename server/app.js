@@ -17,17 +17,13 @@ app.use(passport.initialize());
 
 //const populateDB = require('./populateDB')
 
-const testMiddle = (req, res, next) => {
-    console.log('logger')
-    
-    if(req.headers.authorization) {
-        console.log('Authorization Token Exists')
-    }
+const checkIfAdmin = (req, res, next) => {
+    console.log("logger")
 
     next()
 }
 
-app.use(testMiddle)
+app.use(checkIfAdmin)
 
 //<----- ROUTES HERE ----->
 app.get('/', (req, res) => {

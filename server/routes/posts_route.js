@@ -12,6 +12,8 @@ router.get('/:postId/comments', posts_controller.get_post_comments)
 
 router.post('/:postId/comments', posts_controller.create_comment)
 
+router.delete('/:postId/comments/:commentId', posts_controller.delete_comment)
+
 router.put('/:postId', posts_controller.update_post)
 
 router.delete('/:postId', posts_controller.delete_post)
