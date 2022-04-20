@@ -18,8 +18,7 @@ app.use(passport.initialize());
 //const populateDB = require('./populateDB')
 
 const checkIfAdmin = (req, res, next) => {
-    console.log("logger")
-
+    console.log('logger')
     next()
 }
 

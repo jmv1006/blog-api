@@ -1,6 +1,7 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
 
+//<----- GET all posts ----->
 exports.get_all_posts = (req, res) => {
     Post.find({}).populate('author', '-password').exec((err, posts) => {
         if(err) {
@@ -10,6 +11,7 @@ exports.get_all_posts = (req, res) => {
     })
 };
 
+//<----- GET specific post ----->
 exports.get_specific_post = (req, res) => {
     Post.findById(req.params.postId).populate('author', '-password').exec((err, post) => {
         if(err) {
@@ -19,8 +21,8 @@ exports.get_specific_post = (req, res) => {
     });
 };
 
+//<----- Create new post ----->
 exports.create_post = (req, res) => {
-
     const newPost = new Post({
         title: req.body.title,
         text: req.body.text,
@@ -36,6 +38,7 @@ exports.create_post = (req, res) => {
     })
 }
 
+//<----- UPDATE post ----->
 exports.update_post = (req, res) => {
     Post.findByIdAndUpdate(req.params.postId, { title: req.body.title, text: req.body.text}, (err, result) => {
         if(err) {
@@ -45,6 +48,7 @@ exports.update_post = (req, res) => {
     })
 };
 
+//<----- Delete Post ----->
 exports.delete_post = (req, res) => {
     Post.findByIdAndDelete(req.params.postId, (err) => {
         if(err) {
@@ -93,5 +97,4 @@ exports.delete_comment = (req, res) => {
     } else {
         return res.status(401).json('Only admins can delete comments')
     }
-
 }
