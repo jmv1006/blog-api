@@ -35,7 +35,7 @@ const authenticationRoute = require('./routes/authentication_route');
 app.use('/auth', authenticationRoute)
 
 const postsRouter = require('./routes/posts_route') //will require auth
-app.use('/posts', passport.authenticate('jwt', {session: false}), postsRouter)
+app.use('/posts', postsRouter)
 
 const userRouter = require('./routes/user_route'); //will require auth
 app.use('/user', userRouter)
