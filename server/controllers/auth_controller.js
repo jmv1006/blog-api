@@ -11,7 +11,7 @@ exports.post_sign_in = (req, res) => {
         }
 
         if(!user) {
-            return res.status(400).json(info)
+            return res.status(400).json({info: info, previousInput: req.body})
         }
         
         const tokenUser = {

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Card } from "./post_card_styles";
+import { Link } from 'react-router-dom';
 
 const PostCard = (props) => {
 
@@ -8,10 +9,11 @@ const PostCard = (props) => {
     })
 
     return(
+        <Link to={`/post/${props.post._id}`}>
             <Card>
-                <div>{props.post.title}</div>
-                <div>By: {props.post.author.displayName}</div>
+                {props.post.title}, By: {props.post.author.displayName}
             </Card>
+        </Link>
     )
 }
 

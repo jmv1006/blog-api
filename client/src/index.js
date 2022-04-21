@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import App from './App';
 import PostPage from './components/postpage/post_page';
 import HomePage from './components/homepage/home_page';
+import SignInPage from './components/sign-in/sign_in';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -11,7 +12,8 @@ root.render(
     <Routes>
       <Route path='/' element={<App />}>
         <Route path='/' element={<HomePage />} />
-        <Route path='/posts/:postId' element={<PostPage />} />
+        <Route path='/post/:postId' element={<PostPage />} />
+        <Route path='/sign-in' element={<SignInPage />} />
       </Route>
     </Routes>
   </BrowserRouter>
