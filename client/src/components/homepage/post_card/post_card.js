@@ -4,10 +4,6 @@ import { Link } from 'react-router-dom';
 
 const PostCard = (props) => {
 
-    useEffect(() => {
-        console.log(props.post)
-    })
-
     return(
         <Link to={`/post/${props.post._id}`}>
             <Card>

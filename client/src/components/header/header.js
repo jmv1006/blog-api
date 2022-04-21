@@ -1,12 +1,25 @@
 import { HeaderContainer, HeaderItem } from "./header_styles";
 import { Link } from 'react-router-dom';
+import { useEffect } from "react";
 
-const Header = () => {
-    
+const Header = (props) => {
+    useEffect(() => {
+        if(props.user) {
+            console.log('exists')
+        }
+    }, [])
+
+    const headerButtonDisplay = () => {
+        if(props.user) {
+            return <HeaderItem>Signed In</HeaderItem>
+        }
+        return  <Link to={`/sign-in`}><HeaderItem>Sign In</HeaderItem></Link>
+    }
+
     return(
         <HeaderContainer>
             <HeaderItem primary>Blog API</HeaderItem>
-            <Link to={`/sign-in`}><HeaderItem>Sign In</HeaderItem></Link>
+            {headerButtonDisplay()}
         </HeaderContainer>
     )
 }

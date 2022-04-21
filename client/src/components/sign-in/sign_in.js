@@ -1,9 +1,29 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 const SignInPage = () => {
     
     const Navigate = useNavigate();
+
+    const {userInfo, authToken} = useOutletContext();
+
+    const [user, setUser] = userInfo;
+    const [token, setToken] = authToken;
+    
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+
+    const handleChange = (e) => {
+        const value = e.target.value
+        switch(e.target.name) {
+            case('username'):
+                setUsername(value);
+                break;
+            case('password'):
+                setPassword(value)
+                break;
+        }
+    };
 
     const postData = (e) => {
         e.preventDefault()
@@ -14,22 +34,27 @@ const SignInPage = () => {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({username:e.target.username.value, password: e.target.password.value})
+            body: JSON.stringify({username:username, password: password})
         })
         .then(res => {
             if(res.ok) {
-               res.json().then(res => console.log(res))
+               res.json().then(res => {
+                   setUser(res.user)
+                   setToken(res.token)
+               })
                return Navigate('/')
             }
-            return res.json().then(res => console.log(res))
+            return res.json().then(res => {
+                console.log(res.info)
+            })
         })
     }
 
     return(
         <div>
             <form onSubmit={postData}>
-                <input type='email' placeholder="email" name="username" required></input>
-                <input type='password' placeholder="password" name="password" required></input>
+                <input type='email' placeholder="email" name="username" onChange={handleChange} value={username} required></input>
+                <input type='password' placeholder="password" name="password" onChange={handleChange} value={password} required></input>
                 <button type="submit">Submit</button>
             </form>
         </div>

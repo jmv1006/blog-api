@@ -5,12 +5,13 @@ import './app.css'
 import { useState } from 'react';
 
 function App() {
-  const [user, setUser] = useState();
-  
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState('');
+
   return (
     <div className='appContainer'>
-      <Header />
-      <Outlet />
+      <Header user={user} />
+      <Outlet context={{userInfo: [user, setUser], authToken: [token, setToken]}}/>
     </div>
   );
 }

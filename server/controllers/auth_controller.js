@@ -26,6 +26,7 @@ exports.post_sign_in = (req, res) => {
     
         return res.status(200).json({
             message: 'Auth Passed',
+            user: tokenUser,
             token: token
         })
     })(req, res)
