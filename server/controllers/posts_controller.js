@@ -11,6 +11,14 @@ exports.get_all_posts = (req, res) => {
     })
 };
 
+exports.get_published_posts = (req, res) => {
+    Post.find({isPublished: true}).populate('author', '-password').exec((err, posts) => {
+        if(err) {
+            return res.status(400).json('Error getting posts')
+        }
+        return res.status(200).json(posts)
+    })
+}
 //<----- GET specific post ----->
 exports.get_specific_post = (req, res) => {
     Post.findById(req.params.postId).populate('author', '-password').exec((err, post) => {
@@ -21,12 +29,14 @@ exports.get_specific_post = (req, res) => {
     });
 };
 
+    
 //<----- Create new post ----->
 exports.create_post = (req, res) => {
     const newPost = new Post({
         title: req.body.title,
         text: req.body.text,
         author: req.user._id,
+        isPublished: true,
         date: new Date()
     })
 

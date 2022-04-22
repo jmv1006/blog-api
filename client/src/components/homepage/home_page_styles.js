@@ -10,12 +10,14 @@ justify-content: flex-start;
 `
 
 export const CardContainer = styled.div`
-width: 100%;
-height: 100%;
-border: 2px solid blue;
+width: 95%;
+min-height: 50%;
+height: auto;
+border: 2px solid purple;
 display: flex;
 flex-direction: row;
 justify-content: center;
 align-items: flex-start;
 gap: 3rem;
+flex-wrap: wrap;
 `

@@ -10,9 +10,8 @@ export const HeaderContainer = styled.div`
 `;
 
 export const HeaderItem = styled.div`
-    border: 2px solid red;
     width: 6rem;
-    height: 2rem;
+    height: 3rem;
     display: flex;
     justify-content: space-around;
     align-items: center;

@@ -13,7 +13,10 @@ const Header = (props) => {
         if(props.user) {
             return <HeaderItem>Signed In</HeaderItem>
         }
-        return  <Link to={`/sign-in`}><HeaderItem>Sign In</HeaderItem></Link>
+        return  <div>
+            <Link to={`/sign-in`}><HeaderItem>Sign In</HeaderItem></Link>
+            <HeaderItem>Sign Up</HeaderItem>
+        </div>
     }
 
     return(

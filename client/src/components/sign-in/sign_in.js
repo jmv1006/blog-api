@@ -9,6 +9,7 @@ const SignInPage = () => {
 
     const [user, setUser] = userInfo;
     const [token, setToken] = authToken;
+    const [errors, setErrors] = useState('');
     
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -45,7 +46,7 @@ const SignInPage = () => {
                return Navigate('/')
             }
             return res.json().then(res => {
-                console.log(res.info)
+                setErrors(res.info.message)
             })
         })
     }
@@ -57,6 +58,7 @@ const SignInPage = () => {
                 <input type='password' placeholder="password" name="password" onChange={handleChange} value={password} required></input>
                 <button type="submit">Submit</button>
             </form>
+            {errors}
         </div>
     )
 }

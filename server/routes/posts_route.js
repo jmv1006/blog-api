@@ -4,7 +4,9 @@ const passport = require('passport')
 const posts_controller = require('../controllers/posts_controller')
 
 
-router.get('/', posts_controller.get_all_posts)
+router.get('/all', posts_controller.get_all_posts)
+
+router.get('/', posts_controller.get_published_posts)
 
 router.post('/create', passport.authenticate('jwt', {session: false}), posts_controller.create_post)
 
