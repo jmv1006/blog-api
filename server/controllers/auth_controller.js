@@ -46,8 +46,8 @@ exports.post_sign_up = (req, res) => {
             .max(20)
             .required()
             .messages({
-                'string.min': 'Last name must be at least 3 characters.',
-                'string.max': 'Last name cannot be more than 20 characters.'
+                'string.min': 'Display name must be at least 3 characters.',
+                'string.max': 'Display name cannot be more than 20 characters.'
             }),
         password: Joi.string()
             .min(3)
@@ -73,13 +73,13 @@ exports.post_sign_up = (req, res) => {
 
         const response = {
             errors: errors,
-            previousInput: req.body
+            //previousInput: req.body
         }
 
         return res.status(400).json(response)
     }
     
-    User.find({username: req.body.username}, (err, user) => {
+    User.findOne({username: req.body.username}, (err, user) => {
         if(err) {
             return res.status(400).json('Error creating new user')
         }

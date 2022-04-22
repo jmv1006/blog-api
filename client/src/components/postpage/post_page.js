@@ -24,7 +24,7 @@ const PostPage = () => {
 
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
-  //Post Page, {params.postId}
+  
   useEffect(() => {
     fetch(`/posts/${params.postId}`).then((res) => {
       if (res.ok) {
@@ -40,7 +40,6 @@ const PostPage = () => {
     fetch(`/posts/${params.postId}/comments`).then((res) => {
       if (res.ok) {
         res.json().then((res) => {
-          console.log(res);
           setComments(res);
         });
         return;
@@ -53,7 +52,6 @@ const PostPage = () => {
     fetch(`/posts/${params.postId}/comments`).then((res) => {
         if (res.ok) {
           res.json().then((res) => {
-            console.log(res);
             setComments(res);
           });
           return;
@@ -110,6 +108,7 @@ const PostPage = () => {
         </CreateCommentContainer>
       );
     }
+    return <div>Sign in to post comments!</div>
   };
   return (
     <PostPageContainer>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 
 const SignInPage = () => {

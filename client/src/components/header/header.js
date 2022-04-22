@@ -17,7 +17,7 @@ const Header = (props) => {
         }
         return  <HeaderButtonContainer>
                      <Link to={`/sign-in`}><HeaderItem>Sign In</HeaderItem></Link>
-                    <HeaderItem>Sign Up</HeaderItem>
+                    <Link to={'/sign-up'}><HeaderItem>Sign Up</HeaderItem></Link>
                 </HeaderButtonContainer>
     }
 

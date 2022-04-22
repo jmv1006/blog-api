@@ -20,18 +20,17 @@ export const PostContentContainer = styled.div`
 `
 export const TopContainer = styled.div`
     width: 88%;
-    height: auto;
     padding: 1%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     gap: .5rem;
+    border: 2px solid red;
 `
 
 export const AuthorTitleContainer = styled.div`
     width: 26rem;
-    height: 2.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -41,7 +40,6 @@ export const AuthorTitleContainer = styled.div`
 
 export const TitleContainer = styled.div`
     width: 40rem;
-    min-height: 3rem;
     display: flex;
     justify-content: flex-start;
     align-items: center;
