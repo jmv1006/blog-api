@@ -2,16 +2,16 @@ import styled from 'styled-components'
 
 export const HeaderContainer = styled.div`
     width: 100%;
-    height: 5rem;
-    background-color: wheat;
+    min-height: 4.25rem;
+    background-color: lightgrey;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    position: sticky;
 `;
 
 export const HeaderItem = styled.div`
     width: 6rem;
-    height: 3rem;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -21,3 +21,11 @@ export const HeaderItem = styled.div`
         : '&:hover { cursor: pointer }'
     }
 `;
+
+export const HeaderButtonContainer = styled.div`
+    width: 15rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+`

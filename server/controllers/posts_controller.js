@@ -70,7 +70,7 @@ exports.delete_post = (req, res) => {
 
 //<---- GET all comments for post ---->
 exports.get_post_comments = (req, res) => {
-    Comment.find({postId: req.params.postId}, (err, comments) => {
+    Comment.find({postId: req.params.postId}).populate('author', '-password').exec((err, comments) => {
         if(err) {
             res.status(400).json('Error finding comments')
         }

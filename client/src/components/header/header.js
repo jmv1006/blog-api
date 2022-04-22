@@ -1,4 +1,4 @@
-import { HeaderContainer, HeaderItem } from "./header_styles";
+import { HeaderContainer, HeaderItem,  HeaderButtonContainer } from "./header_styles";
 import { Link } from 'react-router-dom';
 import { useEffect } from "react";
 
@@ -11,18 +11,20 @@ const Header = (props) => {
 
     const headerButtonDisplay = () => {
         if(props.user) {
-            return <HeaderItem>Signed In</HeaderItem>
+            return  <HeaderButtonContainer>
+                        <HeaderItem>Signed In</HeaderItem>
+                    </HeaderButtonContainer>
         }
-        return  <div>
-            <Link to={`/sign-in`}><HeaderItem>Sign In</HeaderItem></Link>
-            <HeaderItem>Sign Up</HeaderItem>
-        </div>
+        return  <HeaderButtonContainer>
+                     <Link to={`/sign-in`}><HeaderItem>Sign In</HeaderItem></Link>
+                    <HeaderItem>Sign Up</HeaderItem>
+                </HeaderButtonContainer>
     }
 
     return(
         <HeaderContainer>
-            <HeaderItem primary>Blog API</HeaderItem>
-            {headerButtonDisplay()}
+            <Link to="/"><HeaderItem primary>Blog API</HeaderItem></Link>
+           {headerButtonDisplay()}
         </HeaderContainer>
     )
 }

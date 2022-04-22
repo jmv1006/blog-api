@@ -22,7 +22,6 @@ const HomePage = () => {
 
     return(
         <HomePageContainer>
-            Home Page
             <CardContainer>
                 {mappedPosts}
             </CardContainer>

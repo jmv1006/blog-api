@@ -16,13 +16,12 @@ export const PostContentContainer = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
 `
 export const TopContainer = styled.div`
-    border: 2px solid red;
-    width: 98%;
-    min-height: 8.5rem;
+    width: 88%;
     height: auto;
+    padding: 1%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,24 +30,23 @@ export const TopContainer = styled.div`
 `
 
 export const AuthorTitleContainer = styled.div`
-    border: 2px solid orange;
     width: 26rem;
     height: 2.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     font-size: 1rem;
 `
 
 export const TitleContainer = styled.div`
-    border: 2px solid purple;
     width: 40rem;
-    height: 3.5rem;
+    min-height: 3rem;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    font-size: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
 `
 
 export const PostImageContainer = styled.div`
@@ -59,13 +57,39 @@ export const PostImageContainer = styled.div`
 `
 
 export const TextContainer = styled.div`
-    border: 2px solid black;
-    width: 98%;
-    height: 30rem;
+    padding: 1%;
+    width: 88%;
 `
 
 export const CommentContainer = styled.div`
-    border: 2px solid black;
-    width: 98%;
-    height: 10rem;
+    width: 88%;
+    padding: 1%;
+    min-height: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+`
+
+export const CreateCommentContainer = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+`
+export const CreateCommentForm = styled.form`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: .5rem;
+`
+export const CommentInputBox = styled.textarea`
+    resize: none;
+    width: 100%;
+    height: 4rem;
+    font-family: 'Source Sans Pro', sans-serif;
 `
