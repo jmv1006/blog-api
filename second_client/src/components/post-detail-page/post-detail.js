@@ -9,19 +9,31 @@ import {
   TitleInputForm,
   TextInputContainer,
   TextInputArea,
-  PostActionButton
+  PostActionButton,
 } from "./post-detail-styles";
+import { useOutletContext, useNavigate } from "react-router-dom";
+import PopUpModal from "./popUpModal/pop-up-modal";
 
 const PostDetailPage = () => {
   const params = useParams();
+  const navigate = useNavigate();
+  const { userInfo, authToken } = useOutletContext();
+
+  const [user, setUser] = userInfo;
+  const [token, setToken] = authToken;
+  const [error, setError] = useState('')
 
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState(null);
+  const [isShown, setIsShown] = useState(false);
 
   useEffect(() => {
-    console.log("mounted");
-    fetchPost();
-    fetchComments();
+    if(user) {
+      fetchPost();
+      fetchComments();
+    } else {
+      navigate('/')
+    }
   }, []);
 
   const handleChange = (e) => {
@@ -57,23 +69,68 @@ const PostDetailPage = () => {
     });
   };
 
+  const updatePost = () => {
+    fetch(`/posts/${params.postId}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify({ title: post.title, text: post.text }),
+    }).then((res) => {
+      if(res.ok) {
+        //Succesfully updated post
+        return fetchPost();
+      }
+      setError('error updating post')
+    });
+  };
+
+  const handlePopUpModal = () => {
+    if (isShown) {
+      return <PopUpModal closeModal={closeModal} />;
+    }
+    return null;
+  };
+
+  const openModal = () => {
+    setIsShown(true);
+  };
+
+  const closeModal = () => {
+    setIsShown(false);
+  };
+
   const PostDetailsRender = () => {
     return (
       <PostDetailsWrapper>
+        {handlePopUpModal()}
         <PostDetailLeftSide>
           <PageTitle>POST INFO</PageTitle>
           <TitleInputForm>
-              Title: 
-              <input type='text' placeholder="Post Title" onChange={handleChange} name="title" value={post.title}></input>
+            Title:
+            <input
+              type="text"
+              placeholder="Post Title"
+              onChange={handleChange}
+              name="title"
+              value={post.title}
+            ></input>
           </TitleInputForm>
           <TextInputContainer>
-              Text:
-              <TextInputArea onChange={handleChange} name="text" value={post.text} />
+            Text:
+            <TextInputArea
+              onChange={handleChange}
+              name="text"
+              value={post.text}
+            />
           </TextInputContainer>
         </PostDetailLeftSide>
         <PostDetailRightSide>
-            <PostActionButton>Delete</PostActionButton>
-            <PostActionButton>Publish</PostActionButton>
+          <PostActionButton onClick={updatePost}>Save Changes</PostActionButton>
+          <PostActionButton onClick={openModal}>Delete</PostActionButton>
+          <PostActionButton>Publish</PostActionButton>
         </PostDetailRightSide>
       </PostDetailsWrapper>
     );

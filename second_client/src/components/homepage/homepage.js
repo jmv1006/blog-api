@@ -1,11 +1,15 @@
 import { HomePageContainer, PostsDisplayContainer } from "./home-page-styles";
 import { useEffect, useState } from "react";
 import PostBox from "./post-box/post-box";
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 
 const HomePage = () => {
+    const {userInfo, authToken} = useOutletContext();
 
     const [posts, setPosts] = useState([])
+    const [user, setUser] = userInfo;
+    const [token, setToken] = authToken;
+
 
     useEffect(() => {
         fetchPosts()
@@ -20,17 +24,23 @@ const HomePage = () => {
     }
   
     const mappedPosts = posts.map((post) => 
-       <Link key={post._id} to={`/manage/post/${post._id}`}><PostBox post={post} fetchPosts={fetchPosts}></PostBox></Link>
+       <Link key={post._id} to={`/manage/post/${post._id}`}><PostBox post={post} fetchPosts={fetchPosts} token={token}></PostBox></Link>
     )
     
     const handlePostsConditional = () => {
-
+        if(user) {
+            return(
+                <PostsDisplayContainer>
+                {mappedPosts}
+                </PostsDisplayContainer>
+            )
+        }
+        return <div>Sign In To Access UI</div>
     }
+
     return(
         <HomePageContainer>
-            <PostsDisplayContainer>
-                {mappedPosts}
-            </PostsDisplayContainer>
+            {handlePostsConditional()}
         </HomePageContainer>
     )
 }

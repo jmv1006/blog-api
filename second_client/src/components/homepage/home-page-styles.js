@@ -18,3 +18,4 @@ export const PostsDisplayContainer = styled.div`
     flex-wrap: wrap;
     padding: 1rem;
 `
+

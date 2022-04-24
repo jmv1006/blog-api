@@ -9,6 +9,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import SignInPage from './components/sign-in/sign-in';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,6 +18,7 @@ root.render(
       <Route path='/' element={<App />}>
         <Route path='/' element={<HomePage />} />
           <Route path='/manage/post/:postId' element={<PostDetailPage />} />
+          <Route path='/sign-in' element={<SignInPage />} />
       </Route>
     </Routes>
   </BrowserRouter>

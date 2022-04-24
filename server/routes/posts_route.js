@@ -22,6 +22,6 @@ router.put('/:postId', passport.authenticate('jwt', {session: false}), posts_con
 
 router.delete('/:postId', passport.authenticate('jwt', {session: false}), posts_controller.delete_post)
 
-router.post('/:postId/toggle-publish', posts_controller.toggle_post_publishedStatus)
+router.post('/:postId/toggle-publish', passport.authenticate('jwt', {session: false}), posts_controller.toggle_post_publishedStatus)
 
 module.exports = router;
