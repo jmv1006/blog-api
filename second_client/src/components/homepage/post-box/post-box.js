@@ -1,4 +1,4 @@
-import { PostBoxContainer } from "./post-box-styles"
+import { PostBoxContainer, PostBoxTitle } from "./post-box-styles"
 import { useState, useEffect } from 'react'
 
 const PostBox = (props) => {
@@ -44,8 +44,8 @@ const PostBox = (props) => {
 
     return(
         <PostBoxContainer>
-            {post.title}:
-            {post.author.displayName}:
+            <PostBoxTitle>{post.title}</PostBoxTitle>
+            By: {post.author.displayName}
             {isPublishedConditionalRender()}
         </PostBoxContainer>
     )
