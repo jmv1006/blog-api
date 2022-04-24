@@ -1,7 +1,11 @@
+import { HeaderContainer } from "./header-styles";
+
 const Header = () => {
 
     return(
-        <div>Header</div>
+        <HeaderContainer>
+            Blog Editor
+        </HeaderContainer>
     )
 };
 

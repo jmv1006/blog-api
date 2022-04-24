@@ -16,7 +16,6 @@ function App() {
   return (
     <div className="mainAppContainer">
       <Header />
-      {/* Outlet */}
       <Outlet />
       {/* Footer */}
     </div>

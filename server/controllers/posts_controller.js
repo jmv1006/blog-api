@@ -108,3 +108,26 @@ exports.delete_comment = (req, res) => {
         return res.status(401).json('Only admins can delete comments')
     }
 }
+
+exports.toggle_post_publishedStatus = (req, res) => {
+    let updateBlock = {}
+
+    if(req.body.isPublished) {
+        updateBlock = {
+            isPublished: false
+        }
+    } else {
+        updateBlock = {
+            isPublished: true
+        }
+    }
+
+    Post.findByIdAndUpdate(req.params.postId, updateBlock, (err, updatedPost) => {
+
+        if(err) {
+            return res.status(400).json('Error finding post to update.')
+        }
+        
+        res.status(200).json('Succesfully toggled post published status.')
+    })
+}
