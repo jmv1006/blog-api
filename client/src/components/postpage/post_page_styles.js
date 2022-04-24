@@ -16,7 +16,7 @@ export const PostContentContainer = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.25rem;
 `
 export const TopContainer = styled.div`
     width: 88%;
@@ -26,7 +26,6 @@ export const TopContainer = styled.div`
     justify-content: center;
     align-items: flex-start;
     gap: .5rem;
-    border: 2px solid red;
 `
 
 export const AuthorTitleContainer = styled.div`
@@ -55,7 +54,6 @@ export const PostImageContainer = styled.div`
 `
 
 export const TextContainer = styled.div`
-    padding: 1%;
     width: 88%;
 `
 
@@ -65,13 +63,13 @@ export const CommentContainer = styled.div`
     min-height: 5rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     gap: 1rem;
 `
 
 export const CreateCommentContainer = styled.div`
-    width: 100%;
+    width: 96.5%;
     display: flex;
     flex-direction: column;
     justify-content: center;

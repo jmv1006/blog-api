@@ -36,7 +36,7 @@ exports.create_post = (req, res) => {
         title: req.body.title,
         text: req.body.text,
         author: req.user._id,
-        isPublished: true,
+        isPublished: false,
         date: new Date()
     })
 
