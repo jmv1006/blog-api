@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
+import { SignInFormContainer, SignInForm, SignInTitle, SignInInputBox, SignInFormButton } from "./sign-in-styles";
 
 const SignInPage = () => {
   const Navigate = useNavigate();
@@ -12,6 +13,12 @@ const SignInPage = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if(user) {
+      Navigate('/')
+    }
+  }, [])
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -54,28 +61,29 @@ const SignInPage = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={postData}>
-        <input
+    <SignInFormContainer>
+      <SignInTitle>Sign In</SignInTitle>
+      <SignInForm onSubmit={postData}>
+        <SignInInputBox
           type="email"
           placeholder="email"
           name="username"
           onChange={handleChange}
           value={username}
           required
-        ></input>
-        <input
+        ></SignInInputBox>
+        <SignInInputBox
           type="password"
           placeholder="password"
           name="password"
           onChange={handleChange}
           value={password}
           required
-        ></input>
-        <button type="submit">Submit</button>
-      </form>
-      {errors}
-    </div>
+        ></SignInInputBox>
+        {errors}
+        <SignInFormButton type="submit">Sign In</SignInFormButton>
+      </SignInForm>
+    </SignInFormContainer>
   );
 };
 

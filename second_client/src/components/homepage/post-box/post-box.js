@@ -25,7 +25,6 @@ const PostBox = (props) => {
       },
       body: JSON.stringify({ isPublished: post.isPublished }),
     }).then((res) => {
-      console.log(res)
       res.json().then(res => console.log(res))
     });
   };

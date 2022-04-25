@@ -1,11 +1,11 @@
 import { DeleteModal } from "./pop-up-modal-styles"
 
 const PopUpModal = (props) => {
+
     return(
         <DeleteModal>
-                Pop Up
-                <button onClick={props.closeModal}>X</button>
-            </DeleteModal>
+            <div>{props.text}</div>
+        </DeleteModal>
     )
 }
 
