@@ -5,27 +5,27 @@ import {
   PostDetailsWrapper,
   PostDetailRightSide,
   PostActionButton,
+  PostDetailTopContainer
 } from "./post-detail-styles";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import PopUpModal from "./popUpModal/pop-up-modal";
 import PostDetailForm from "./form/post-detail-form";
+import PostComments from "./comments/post-comments";
 
 const PostDetailPage = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const { userInfo, authToken } = useOutletContext();
 
+  const { userInfo, authToken } = useOutletContext();
   const [user, setUser] = userInfo;
   const [token, setToken] = authToken;
 
   const [post, setPost] = useState(null);
-  const [comments, setComments] = useState(null);
   const [saveMessage, setSaveMessage] = useState("Save Changes");
 
   useEffect(() => {
     if (user) {
       fetchPost();
-      fetchComments();
     } else {
       navigate("/");
     }
@@ -55,18 +55,6 @@ const PostDetailPage = () => {
     }).then((res) => {
       res.json().then((res) => console.log(res));
       fetchPost();
-    });
-  };
-
-  const fetchComments = () => {
-    fetch(`/posts/${params.postId}/comments`).then((res) => {
-      if (res.ok) {
-        res.json().then((res) => {
-          setComments(res);
-        });
-        return;
-      }
-      res.json().then((res) => console.log(res));
     });
   };
 
@@ -118,17 +106,22 @@ const PostDetailPage = () => {
   const PostDetailsRender = () => {
     return (
       <PostDetailsWrapper>
-        <PostDetailForm post={post} setPost={setPost} />
-        <PostDetailRightSide>
-          <PostActionButton onClick={updatePost}>
-            {saveMessage}
-          </PostActionButton>
-          <PostActionButton>Delete</PostActionButton>
-          <PostActionButton onClick={togglePostPublishStatus}>
-            {handlePublishedStatus()}
-          </PostActionButton>
-        </PostDetailRightSide>
-        {/* comments */}
+        <PostDetailTopContainer>
+          {/* Form for post text and title */}
+          <PostDetailForm post={post} setPost={setPost} />
+          {/* Buttons for saving, deleting, and publishing */}
+          <PostDetailRightSide>
+            <PostActionButton onClick={updatePost}>
+              {saveMessage}
+            </PostActionButton>
+            <PostActionButton>Delete</PostActionButton>
+            <PostActionButton onClick={togglePostPublishStatus}>
+              {handlePublishedStatus()}
+            </PostActionButton>
+          </PostDetailRightSide>
+        </PostDetailTopContainer>
+        { /*Post comments container */}
+        <PostComments token={token}/>
       </PostDetailsWrapper>
     );
   };

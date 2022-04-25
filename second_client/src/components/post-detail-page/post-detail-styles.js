@@ -7,14 +7,19 @@ export const PostDetailContainer = styled.div`
 export const PostDetailsWrapper  = styled.div`
     width: 100%;
     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+`
+export const PostDetailTopContainer = styled.div`
+    width: 100%;
+    display: flex;
     justify-content: space-around;
     align-items: flex-start;
-    padding: 2rem;
+    padding: 1rem;
 `
-
 export const PostDetailLeftSide = styled.div`
     width: 35rem;
-    height: 45rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
