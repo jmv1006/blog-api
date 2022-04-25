@@ -12,7 +12,7 @@ const Header = (props) => {
 
     return(
         <HeaderContainer>
-            Blog Editor
+            <Link to="/">Blog Editor</Link>
             <div>{handleIfSignedIn()}</div>
         </HeaderContainer>
     )

@@ -66,6 +66,8 @@ export const TextInputArea = styled.textarea`
     width: 35rem;
     height: 25rem;
     resize: none;
+    font-size: 1rem;
+    font-family: "Source Sans Pro", sans-serif;
 `
 
 export const PostActionButton = styled.button`

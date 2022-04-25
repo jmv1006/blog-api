@@ -128,6 +128,6 @@ exports.toggle_post_publishedStatus = (req, res) => {
             return res.status(400).json('Error finding post to update.')
         }
         
-        res.status(200).json('Succesfully toggled post published status.')
+        res.status(200).json(updateBlock)
     })
 }

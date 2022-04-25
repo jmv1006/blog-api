@@ -19,7 +19,7 @@ const PostDetailForm = (props) => {
 
     return(
         <PostDetailLeftSide>
-            <PageTitle>POST INFO</PageTitle>
+            <PageTitle>Edit Post</PageTitle>
             <TitleInputForm>
             Title:
             <input
