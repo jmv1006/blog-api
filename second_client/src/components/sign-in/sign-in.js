@@ -54,9 +54,7 @@ const SignInPage = () => {
           setErrors("User is not an admin");
         });
       }
-      return res.json().then((res) => {
-        setErrors(res.info.message);
-      });
+      setErrors("Server Error")
     });
   };
 

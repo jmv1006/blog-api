@@ -15,7 +15,7 @@ export const CommentsContainer = styled.div`
 
 export const SingleCommentContainer = styled.div`
     border: 1px solid black;
-    min-height: 3.5rem;
+    padding: .25rem;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -28,4 +28,16 @@ export const CommentAuthorAndDelete = styled.div`
     align-items: center;
     justify-content: space-between;
     font-weight: bold;
+`
+
+export const EditCommentForm = styled.form`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: .25rem;
+`
+
+export const SaveChangesButton = styled.button`
+    width: 6rem;
+    cursor: pointer;
 `

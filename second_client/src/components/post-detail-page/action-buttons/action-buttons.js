@@ -41,7 +41,6 @@ const ActionButtons = (props) => {
         return props.fetchPost();
       }
       setSaveMessage("Error Saving");
-      console.log("error updating post");
     });
   };
 

@@ -25,7 +25,7 @@ const PostComments = (props) => {
     };
 
     const mappedComments = comments.map((comment) => 
-        <Comment key={comment._id} comment={comment}></Comment>
+        <Comment key={comment._id} comment={comment} fetchComments={fetchComments}></Comment>
     )
 
     return(

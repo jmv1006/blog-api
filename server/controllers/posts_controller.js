@@ -109,6 +109,19 @@ exports.delete_comment = (req, res) => {
     }
 }
 
+exports.update_comment = (req, res) => {
+    const updateBlock = {
+        text: req.body.text
+    }
+
+    Comment.findByIdAndUpdate(req.params.commentId, updateBlock, (err) => {
+        if(err) {
+            return res.status(400).json("Error updating comment")
+        }
+        return res.status(200).json("Succesfully Updated Comment")
+    })
+}
+
 exports.toggle_post_publishedStatus = (req, res) => {
     let updateBlock = {}
 

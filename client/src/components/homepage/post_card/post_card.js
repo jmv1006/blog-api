@@ -1,13 +1,16 @@
 import { useEffect } from "react";
-import { Card } from "./post_card_styles";
+import { Card, CardTitle, CardAuthor } from "./post_card_styles";
 import { Link } from 'react-router-dom';
 
 const PostCard = (props) => {
 
+    const post = props.post;
+
     return(
-        <Link to={`/post/${props.post._id}`}>
+        <Link to={`/post/${props.post._id}`} style={{ textDecoration: 'none' }}>
             <Card>
-                {props.post.title}, By: {props.post.author.displayName}
+                <CardTitle>{post.title}</CardTitle>
+                <CardAuthor>By: {post.author.displayName}</CardAuthor>
             </Card>
         </Link>
     )

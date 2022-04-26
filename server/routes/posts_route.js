@@ -16,6 +16,8 @@ router.get('/:postId/comments', posts_controller.get_post_comments)
 
 router.post('/:postId/comments', passport.authenticate('jwt', {session: false}), posts_controller.create_comment)
 
+router.put('/:postId/comments/:commentId', passport.authenticate('jwt', {session: false}), posts_controller.update_comment)
+
 router.delete('/:postId/comments/:commentId', passport.authenticate('jwt', {session: false}), posts_controller.delete_comment)
 
 router.put('/:postId', passport.authenticate('jwt', {session: false}), posts_controller.update_post)
