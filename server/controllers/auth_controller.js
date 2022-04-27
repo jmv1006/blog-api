@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const Joi = require('joi')
 const passport = require('passport')
+const APIKey = require('../models/apikey')
 
 exports.post_sign_in = (req, res) => {
     passport.authenticate('local', {session: false}, (err, user, info) => {
@@ -110,3 +111,13 @@ exports.post_sign_up = (req, res) => {
     })
 };
 
+exports.get_api_key = (req, res) => {
+    APIKey.findOne({type: req.params.typeName}, (err, result) => {
+        if(err) {
+            //error finding
+            res.status(400).json("Error fetching API key")
+            return
+        }
+        res.status(200).json({key: result.key})
+    })
+}

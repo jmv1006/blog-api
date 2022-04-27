@@ -13,11 +13,13 @@ const SignInPage = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [signInMessage, setSignInMessage] = useState("");
 
   useEffect(() => {
     if(user) {
       Navigate('/')
     }
+    setSignInMessage("Sign In");
   }, [])
 
   const handleChange = (e) => {
@@ -34,7 +36,7 @@ const SignInPage = () => {
 
   const postData = (e) => {
     e.preventDefault();
-
+    setSignInMessage("Signing In....")
     fetch("/auth/sign-in", {
       method: "POST",
       headers: {
@@ -46,6 +48,7 @@ const SignInPage = () => {
       if (res.ok) {
         res.json().then((res) => {
           if (res.user.isAdmin) {
+            setSignInMessage("Signing In Successful")
             setUser(res.user);
             setToken(res.token);
             Navigate("/");
@@ -54,10 +57,11 @@ const SignInPage = () => {
           setErrors("User is not an admin");
         });
       }
+      setSignInMessage("Sign In")
       setErrors("Server Error")
     });
   };
-
+  
   return (
     <SignInFormContainer>
       <SignInTitle>Sign In</SignInTitle>
@@ -79,7 +83,7 @@ const SignInPage = () => {
           required
         ></SignInInputBox>
         {errors}
-        <SignInFormButton type="submit">Sign In</SignInFormButton>
+        <SignInFormButton type="submit">{signInMessage}</SignInFormButton>
       </SignInForm>
     </SignInFormContainer>
   );

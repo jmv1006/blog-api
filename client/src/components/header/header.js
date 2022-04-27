@@ -16,14 +16,14 @@ const Header = (props) => {
                     </HeaderButtonContainer>
         }
         return  <HeaderButtonContainer>
-                     <Link to={`/sign-in`}><HeaderItem>Sign In</HeaderItem></Link>
-                    <Link to={'/sign-up'}><HeaderItem>Sign Up</HeaderItem></Link>
+                     <Link to={`/sign-in`} style={{ textDecoration: 'none' }}><HeaderItem>Sign In</HeaderItem></Link>
+                    <Link to={'/sign-up'} style={{ textDecoration: 'none' }}><HeaderItem>Sign Up</HeaderItem></Link>
                 </HeaderButtonContainer>
     }
 
     return(
         <HeaderContainer>
-            <Link to="/"><HeaderItem primary>Blog API</HeaderItem></Link>
+            <Link to="/" style={{ textDecoration: 'none' }}><HeaderItem primary>Blog API</HeaderItem></Link>
            {headerButtonDisplay()}
         </HeaderContainer>
     )

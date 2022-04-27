@@ -5,7 +5,9 @@ const Header = (props) => {
 
     const handleIfSignedIn = () => {
         if(props.user) {
-            return <div>Signed In</div>
+            return <div>
+                <Link to="/create-post">Create Post</Link>
+            </div>
         }
         return <Link to='/sign-in'>Sign In</Link>
     }

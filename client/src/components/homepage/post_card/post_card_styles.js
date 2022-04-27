@@ -8,7 +8,7 @@ export const Card = styled.div`
     color: black;
     justify-content: space-around;
     align-items: center;
-    width: 15rem;
+    width: 25rem;
     height: 8rem;
 `
 export const CardTitle = styled.div`

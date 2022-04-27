@@ -5,9 +5,10 @@ export const HeaderContainer = styled.div`
     min-height: 4.25rem;
     background-color: lightgrey;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    position: sticky;
+    background-color: #282828;
+    position: sticky; top: 0;
 `;
 
 export const HeaderItem = styled.div`
@@ -15,9 +16,9 @@ export const HeaderItem = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    color: black;
+    color: white;
     ${props => props.primary 
-        ? 'font-size: 1.5rem'
+        ? 'font-size: 1.5rem; margin-left: 2rem;'
         : '&:hover { cursor: pointer }'
     }
 `;

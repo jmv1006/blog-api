@@ -13,6 +13,7 @@ const SignInPage = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [signInMessage, setSignInMessage] = useState("Sign In")
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -28,7 +29,7 @@ const SignInPage = () => {
 
   const postData = (e) => {
     e.preventDefault();
-
+    setSignInMessage("Signing In...")
     fetch("/auth/sign-in", {
       method: "POST",
       headers: {
@@ -41,10 +42,12 @@ const SignInPage = () => {
         res.json().then((res) => {
           setUser(res.user);
           setToken(res.token);
+          setSignInMessage("Sign In Successful")
         });
         return Navigate("/");
       }
       return res.json().then((res) => {
+        setSignInMessage("Sign In")
         setErrors(res.info.message);
       });
     });

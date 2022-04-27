@@ -9,6 +9,7 @@ export const SignInFormContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 30rem;
 `
 
 export const SignInTitle = styled.div`

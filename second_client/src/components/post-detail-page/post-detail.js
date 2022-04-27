@@ -28,6 +28,10 @@ const PostDetailPage = () => {
     }
   }, []);
 
+  const handlePostChanges = (input) => {
+    
+  }
+
   const fetchPost = () => {
     fetch(`/posts/${params.postId}`).then((res) => {
       if (res.ok) {

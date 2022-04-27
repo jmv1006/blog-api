@@ -4,7 +4,7 @@ export const PostPageContainer = styled.div`
     width: 95%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     padding-top: 1rem;
 `
@@ -55,16 +55,17 @@ export const PostImageContainer = styled.div`
 
 export const TextContainer = styled.div`
     width: 88%;
+    min-height: 20rem;
 `
 
 export const CommentContainer = styled.div`
     width: 88%;
+    min-height: 20rem;
     padding: 1%;
-    min-height: 5rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 1rem;
 `
 

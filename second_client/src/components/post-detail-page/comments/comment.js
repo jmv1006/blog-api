@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { SingleCommentContainer, CommentAuthorAndDelete, SaveChangesButton, EditCommentForm } from "./comment-styles";
 import { useOutletContext, useParams } from "react-router-dom";
+
 const Comment = (props) => {
 
     const [text, setText] = useState({
@@ -50,6 +51,10 @@ const Comment = (props) => {
             //Failed to update comment
             setButtonText('Error Saving')
         })
+    }
+
+    const deleteComment = () => {
+
     }
 
 

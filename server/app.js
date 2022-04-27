@@ -40,6 +40,9 @@ app.use('/posts', postsRouter)
 const userRouter = require('./routes/user_route'); //will require auth
 app.use('/user', userRouter)
 
+app.post('/use', (req, res) => {
+    console.log(req.body)
+})
 
 const PORT = process.env.port || '5000';
 

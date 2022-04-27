@@ -12,6 +12,7 @@ import {
   CommentInputBox,
   CreateCommentForm
 } from "./post_page_styles";
+import Parser from 'html-react-parser'
 import Comment from "./comments/comment";
 
 const PostPage = () => {
@@ -90,7 +91,7 @@ const PostPage = () => {
   const mappedComments = comments.map((comment) => (
     <Comment key={comment._id} comment={comment}></Comment>
   ));
-
+  
   const createCommentBox = () => {
     if (user) {
       return (
@@ -121,7 +122,7 @@ const PostPage = () => {
             </AuthorTitleContainer>
             <TitleContainer>{post.title}</TitleContainer>
           </TopContainer>
-          <TextContainer>{post.text}</TextContainer>
+          <TextContainer>{Parser(post.text)}</TextContainer>
           <CommentContainer>
             Comments:
             {createCommentBox()}
