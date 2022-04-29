@@ -1,52 +1,27 @@
 import {
   CreateCommentContainer,
-  CommentContainer,
-  CommentInputBox,
-  CreateCommentForm,
+  CommentContainer
 } from "../post_page_styles";
 import Comment from "./comment";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import useFetchGet from "../../../hooks/useFetchGet";
+import CreateCommentComponent from "./create-comment-form";
 
 const CommentsComponent = (props) => {
   const params = useParams();
-  const [comments, setComments] = useState([]);
-  const { fetchData, data, isLoading, error } = useFetchGet(
+
+  const { fetchData, data, isLoading, getError } = useFetchGet(
     `/posts/${params.postId}/comments`
   );
 
+  const [comments, setComments] = useState([]);
+
   useEffect(() => {
-    if (data != null) {
-      setComments(data);
+    if(data && !getError) {
+      setComments(data)
     }
-  }, [data]);
-
-  const createComment = (e) => {
-    e.preventDefault();
-    const text = e.target.text.value;
-
-    const bearerToken = "Bearer " + props.token;
-
-    fetch(`/posts/${params.postId}/comments`, {
-      method: "POST",
-      headers: {
-        Authorization: bearerToken,
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text: text }),
-    }).then((res) => {
-      if (res.ok) {
-        fetchData(`/posts/${params.postId}/comments`);
-        e.target.text.value = "";
-        return;
-      }
-      res.json().then((res) => {
-        console.log("failed");
-      });
-    });
-  };
+  }, [data])
 
   const mappedComments = comments.map((comment) => (
     <Comment key={comment._id} comment={comment}></Comment>
@@ -57,15 +32,7 @@ const CommentsComponent = (props) => {
       return (
         <CreateCommentContainer>
           Create Comment
-          <CreateCommentForm onSubmit={createComment}>
-            <CommentInputBox
-              type="text"
-              placeholder="Comment Here..."
-              name="text"
-              required
-            ></CommentInputBox>
-            <button type="submit">Submit</button>
-          </CreateCommentForm>
+          <CreateCommentComponent token={props.token} fetchData={fetchData}/>
         </CreateCommentContainer>
       );
     }

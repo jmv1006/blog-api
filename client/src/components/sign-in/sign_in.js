@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { SignInFormContainer, SignInForm, SignInTitle, SignInInputBox, SignInFormButton } from "./sign_in_styles";
+import useFetchPost from "../../hooks/useFetchPost";
 
 const SignInPage = () => {
   const Navigate = useNavigate();
 
   const { userInfo, authToken } = useOutletContext();
+
+  const { returnedData, postData, postIsLoading, postError } = useFetchPost();
 
   const [user, setUser] = userInfo;
   const [token, setToken] = authToken;
@@ -27,7 +30,35 @@ const SignInPage = () => {
     }
   };
 
-  const postData = (e) => {
+  useEffect(() => {
+    
+  }, [postIsLoading])
+
+  useEffect(() => {
+
+    if(returnedData && !postError) {
+      setUser(returnedData.user)
+      setToken(returnedData.token)
+      Navigate('/')
+    }
+
+    //Error with post
+    if(returnedData && postError) {
+      setErrors(returnedData.info.message)
+    };
+
+  }, [returnedData])
+
+  const postDatas = (e) => {
+    e.preventDefault();
+
+    const body = {
+      username: username,
+      password: password
+    }
+
+    postData('/auth/sign-in', body, null)
+    /*
     e.preventDefault();
     setSignInMessage("Signing In...")
     fetch("/auth/sign-in", {
@@ -55,12 +86,13 @@ const SignInPage = () => {
         setErrors(res.info.message);
       });
     });
+    */
   };
 
   return (
     <SignInFormContainer>
       <SignInTitle>Sign In</SignInTitle>
-      <SignInForm onSubmit={postData}>
+      <SignInForm onSubmit={postDatas}>
         <SignInInputBox
           type="email"
           placeholder="email"
