@@ -57,8 +57,11 @@ const SignInPage = () => {
           setErrors("User is not an admin");
         });
       }
+      if(res.status === 500) {
+        setErrors("Error Connecting To Server")
+        return
+      }
       setSignInMessage("Sign In")
-      setErrors("Server Error")
     });
   };
   

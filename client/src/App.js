@@ -9,6 +9,8 @@ function App() {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState('');
 
+  //const data = useFetchGet('/posts')
+  
   return (
     <div className='appContainer'>
       <Header user={user} />

@@ -24,7 +24,7 @@ const HomePage = () => {
     }
   
     const mappedPosts = posts.map((post) => 
-       <Link key={post._id} to={`/manage/post/${post._id}`}><PostBox post={post} fetchPosts={fetchPosts} token={token}></PostBox></Link>
+       <Link key={post._id} to={`/manage/post/${post._id}`} style={{ textDecoration: 'none' }}><PostBox post={post} fetchPosts={fetchPosts} token={token}></PostBox></Link>
     )
     
     const handlePostsConditional = () => {
@@ -35,7 +35,7 @@ const HomePage = () => {
                 </PostsDisplayContainer>
             )
         }
-        return <div>Sign In To Access UI</div>
+        return <div>Please Sign In</div>
     }
 
     return(

@@ -3,7 +3,6 @@ import styled from 'styled-components'
 export const HeaderContainer = styled.div`
     width: 100%;
     min-height: 4.25rem;
-    background-color: lightgrey;
     display: flex;
     justify-content: space-between;
     align-items: center;

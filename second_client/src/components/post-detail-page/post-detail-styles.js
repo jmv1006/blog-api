@@ -14,26 +14,28 @@ export const PostDetailsWrapper  = styled.div`
 export const PostDetailTopContainer = styled.div`
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
     align-items: flex-start;
-    padding: 1rem;
+    padding: 2.5rem;
+    gap: 2rem;
 `
 export const PostDetailLeftSide = styled.div`
-    width: 35rem;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
+    gap: 2rem;
 `
 
 export const PostDetailRightSide = styled.div`
-    width: 15rem;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
     gap: 2rem;
-    margin-top: 8.5rem;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: space-around;
 `
 
 export const PageTitle = styled.div`
@@ -50,24 +52,16 @@ export const TitleInputForm = styled.form`
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    gap: .5rem;
 `
 
 export const TextInputContainer = styled.div`
     padding-left: 1rem;
-    width: 40rem;
-    height: 30rem;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
-`
-
-export const TextInputArea = styled.textarea`
-    width: 35rem;
-    height: 25rem;
-    resize: none;
-    font-size: 1rem;
-    font-family: "Source Sans Pro", sans-serif;
+    align-items: center;
 `
 
 export const PostActionButton = styled.button`

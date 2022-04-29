@@ -5,16 +5,19 @@ import {
   TextInputContainer,
 } from "../post-detail-styles";
 import { Editor } from "@tinymce/tinymce-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
 const PostDetailForm = (props) => {
   const { userInfo, authToken } = useOutletContext();
-  const [user, setUser] = userInfo;
   const [token, setToken] = authToken;
 
   const [apiKey, setAPIKey] = useState("");
 
+  useEffect(() => {
+    fetchEditorAPIKey()
+  }, []);
+  
   const fetchEditorAPIKey = () => {
     fetch("/auth/tinyMCE/apikey", {
       method: "GET",
@@ -59,11 +62,14 @@ const PostDetailForm = (props) => {
         ></input>
       </TitleInputForm>
       <TextInputContainer>
-        Text:
         <Editor
           apiKey={apiKey}
           initialValue={props.post.text}
           onChange={handleTextChange}
+          init={{
+            width: '90%',
+            plugins: "autoresize"
+          }}
         />
       </TextInputContainer>
     </PostDetailLeftSide>

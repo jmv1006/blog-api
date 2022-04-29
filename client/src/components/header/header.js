@@ -1,6 +1,6 @@
 import { HeaderContainer, HeaderItem,  HeaderButtonContainer } from "./header_styles";
 import { Link } from 'react-router-dom';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Header = (props) => {
     useEffect(() => {

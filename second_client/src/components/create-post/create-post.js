@@ -1,21 +1,22 @@
 import { Editor } from '@tinymce/tinymce-react';
 import { useEffect, useState } from 'react';
-import {useOutletContext, useParams, useNavigate} from 'react-router-dom';
+import {useOutletContext,useNavigate} from 'react-router-dom';
+import { CreatePostContainer, CreatePostForm, PageTitle } from './create-post-styles';
 
 const CreatePost = () => {
-    const params = useParams();
     const navigate = useNavigate();
   
     const { userInfo, authToken } = useOutletContext();
     const [user, setUser] = userInfo;
     const [token, setToken] = authToken;
 
-    const [apiKey, setAPIKey] = useState('')
     const[formData, setFormData] = useState('');
     const [title, setTitle] = useState('');
     
     useEffect(() => {
-        fetchEditorAPIKey();
+        if(!user) {
+            navigate("/")
+        }
     }, [])
 
     const onTextChange = (e) => {
@@ -36,7 +37,10 @@ const CreatePost = () => {
             }
         })
         .then(res => res.json())
-        .then(res => setAPIKey(res.key))
+        .then(res => {
+            const key = res.key
+            return key
+        })
     };
 
     const onSubmit = (e) => {
@@ -59,13 +63,15 @@ const CreatePost = () => {
     }
 
     return(
-        <div>
-            <form onSubmit={onSubmit}>
-                <input name='title' type='text' placeholder="title" onChange={onTitleChange} value={title}></input>
-                <Editor apiKey={apiKey} onChange={onTextChange}/>
+        <CreatePostContainer>
+            <PageTitle>Create New Post</PageTitle>
+            <CreatePostForm onSubmit={onSubmit}>
+                Title:
+                <input name='title' type='text' placeholder="Title" onChange={onTitleChange} value={title}></input>
+                <Editor apiKey={fetchEditorAPIKey()} onChange={onTextChange} init={{width: "100%", min_height: "40rem", plugins: "autoresize"}}/>
                 <button type='submit'>Submit</button>
-            </form>
-        </div>
+            </CreatePostForm>
+        </CreatePostContainer>
     )
 }
 export default CreatePost;
