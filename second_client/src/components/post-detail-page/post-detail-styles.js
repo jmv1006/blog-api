@@ -63,8 +63,3 @@ export const TextInputContainer = styled.div`
     justify-content: center;
     align-items: center;
 `
-
-export const SuccesfullySavedPopUp = styled.div`
-    position: absolute;
-    border: 2px solid red;
-`

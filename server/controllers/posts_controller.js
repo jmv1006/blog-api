@@ -32,11 +32,12 @@ exports.get_specific_post = (req, res) => {
     
 //<----- Create new post ----->
 exports.create_post = (req, res) => {
+
     const newPost = new Post({
         title: req.body.title,
         text: req.body.text,
         author: req.user._id,
-        isPublished: false,
+        isPublished: req.body.isPublished,
         date: new Date()
     })
 
@@ -60,11 +61,17 @@ exports.update_post = (req, res) => {
 
 //<----- Delete Post ----->
 exports.delete_post = (req, res) => {
-    Post.findByIdAndDelete(req.params.postId, (err) => {
+    Post.findByIdAndDelete(req.params.postId, (err, post) => {
         if(err) {
             return res.status(400).json('Error deleting post')
         }
-        return res.status(200).json('Succesfully deleted post')
+        Comment.find({postId: post._id}, (err, result) => {
+            if(err) {
+                //error deleting comments
+                return res.status(400).json("Deleted Post, but had an error deleting comments.")
+            }
+        })
+        return res.status(200).json('Succesfully deleted post and comments')
     })
 };
 

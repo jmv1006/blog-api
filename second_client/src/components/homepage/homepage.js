@@ -29,7 +29,7 @@ const HomePage = () => {
 
     return(
         <HomePageContainer>
-            {user ? <PostsDisplayContainer>{mappedPosts}</PostsDisplayContainer> : <div>Sign In To Access</div>}
+            {user ? <PostsDisplayContainer>{mappedPosts.length > 0 ? mappedPosts: "Loading Posts..."}</PostsDisplayContainer> : <div>Sign In To Access</div>}
         </HomePageContainer>
     )
 }

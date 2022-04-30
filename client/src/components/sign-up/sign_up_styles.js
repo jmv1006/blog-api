@@ -1,7 +1,29 @@
 import styled from "styled-components";
 
 export const SignUpPageContainer = styled.div`
-    border: 2px solid red;
     width: 95%;
-    min-height: 100%;
+    height: 45rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+`
+
+export const SignUpForm = styled.div`
+    width: 95%;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.5rem;
+`
+
+export const SignUpInputBox = styled.input`
+    width: 15rem;
+    height: 2rem;
+`
+
+export const SignUpFormButton = styled.button`
+    width: 12rem;
+    height: 2.5rem;
 `

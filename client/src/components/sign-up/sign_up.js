@@ -1,4 +1,4 @@
-import { SignUpPageContainer } from "./sign_up_styles";
+import { SignUpPageContainer, SignUpForm, SignUpInputBox, SignUpFormButton } from "./sign_up_styles";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -25,7 +25,6 @@ const SignUpPage = () => {
 
   const postSignUp = (e) => {
     e.preventDefault();
-
     fetch("/auth/sign-up", {
       method: "POST",
       headers: {
@@ -56,42 +55,43 @@ const SignUpPage = () => {
 
   return (
     <SignUpPageContainer>
-      <form onSubmit={postSignUp}>
-        <input
+      <SignUpForm>
+        <h2>Sign Up</h2>
+        <SignUpInputBox
           type="text"
           placeholder="E-mail"
           name="username"
           value={formInfo.username}
           onChange={handleChange}
           required
-        ></input>
-        <input
+        ></SignUpInputBox>
+        <SignUpInputBox
           type="text"
           placeholder="Display Name"
           name="displayName"
           value={formInfo.displayName}
           onChange={handleChange}
           required
-        ></input>
-        <input
+        ></SignUpInputBox>
+        <SignUpInputBox
           type="password"
           placeholder="Password"
           name="password"
           value={formInfo.password}
           onChange={handleChange}
           required
-        ></input>
-        <input
+        ></SignUpInputBox>
+        <SignUpInputBox
           type="password"
           placeholder="Confirm Password"
           name="confirmedPassword"
           value={formInfo.confirmedPassword}
           onChange={handleChange}
           required
-        ></input>
-        <button type="submit">Submit</button>
-      </form>
-      {mappedErrors}
+        ></SignUpInputBox>
+          {mappedErrors}
+        <SignUpFormButton onClick={postSignUp}>Submit</SignUpFormButton>
+      </SignUpForm>
     </SignUpPageContainer>
   );
 };

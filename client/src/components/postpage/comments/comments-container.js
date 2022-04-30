@@ -4,7 +4,7 @@ import {
 } from "../post_page_styles";
 import Comment from "./comment";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams, Link } from "react-router-dom";
 import useFetchGet from "../../../hooks/useFetchGet";
 import CreateCommentComponent from "./create-comment-form";
 
@@ -39,7 +39,7 @@ const CommentsComponent = (props) => {
   return (
     <CommentContainer>
       Comments:
-      {props.user ? createCommentBox(): <h3>Sign In To Post Comments</h3>}
+      {props.user ? createCommentBox(): <h3><Link to="/sign-in">Sign In To Post Comments</Link></h3>}
       {comments.length > 0 ? mappedComments : <div>No Comments Here!</div>}
     </CommentContainer>
   );
