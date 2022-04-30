@@ -21,34 +21,11 @@ const HomePage = () => {
         <PostCard key={post._id} post={post} />
     );
 
-    const handleInitialRender = () => {
-        if(isLoading) {
-            return(
-                <CardContainer>
-                    Loading...
-                </CardContainer>
-            )
-        }
-        return(
-            <CardContainer>
-                {mappedPosts}
-            </CardContainer>
-        )  
-    };
-
-    const handleError = () => {
-        if(error) {
-            return(
-                <div>Server Error</div>
-            )
-        }
-    }
-
     return(
         <HomePageContainer>
             <Welcome />
-            {handleInitialRender()}
-            {handleError()}
+            {isLoading ? <CardContainer>Loading...</CardContainer> : <CardContainer>{mappedPosts}</CardContainer>}
+            {error ? <div>Server Error</div> : null}
         </HomePageContainer>
     )
 }

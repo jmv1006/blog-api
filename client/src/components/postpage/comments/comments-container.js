@@ -28,22 +28,19 @@ const CommentsComponent = (props) => {
   ));
 
   const createCommentBox = () => {
-    if (props.user) {
-      return (
-        <CreateCommentContainer>
-          Create Comment
-          <CreateCommentComponent token={props.token} fetchData={fetchData}/>
-        </CreateCommentContainer>
-      );
-    }
-    return <div>Sign in to post comments!</div>;
+    return (
+      <CreateCommentContainer>
+        Create Comment
+        <CreateCommentComponent token={props.token} fetchData={fetchData}/>
+      </CreateCommentContainer>
+    );
   };
 
   return (
     <CommentContainer>
       Comments:
-      {createCommentBox()}
-      {mappedComments}
+      {props.user ? createCommentBox(): <h3>Sign In To Post Comments</h3>}
+      {comments.length > 0 ? mappedComments : <div>No Comments Here!</div>}
     </CommentContainer>
   );
 };

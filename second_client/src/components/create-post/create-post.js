@@ -2,6 +2,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import { useEffect, useState } from 'react';
 import {useOutletContext,useNavigate} from 'react-router-dom';
 import { CreatePostContainer, CreatePostForm, PageTitle } from './create-post-styles';
+import { PostActionButton } from '../post-detail-page/action-buttons/action-buttons-styles';
 
 const CreatePost = () => {
     const navigate = useNavigate();
@@ -44,6 +45,7 @@ const CreatePost = () => {
     };
 
     const onSubmit = (e) => {
+        e.preventDefault()
         fetch('/posts/create', {
           method: "POST",
           headers: {
@@ -58,7 +60,7 @@ const CreatePost = () => {
                 navigate('/')
                 return
             }
-            //Error Submiting
+            console.log(res.json())
         })
     }
 
@@ -67,9 +69,9 @@ const CreatePost = () => {
             <PageTitle>Create New Post</PageTitle>
             <CreatePostForm onSubmit={onSubmit}>
                 Title:
-                <input name='title' type='text' placeholder="Title" onChange={onTitleChange} value={title}></input>
-                <Editor apiKey={fetchEditorAPIKey()} onChange={onTextChange} init={{width: "100%", min_height: "40rem", plugins: "autoresize"}}/>
-                <button type='submit'>Submit</button>
+                <input name='title' type='text' placeholder="Title" onChange={onTitleChange} value={title} required></input>
+                <Editor apiKey={fetchEditorAPIKey()} onChange={onTextChange} init={{width: "100%", min_height: "60rem", plugins: "autoresize"}}/>
+                <PostActionButton type='submit'>Create</PostActionButton>
             </CreatePostForm>
         </CreatePostContainer>
     )

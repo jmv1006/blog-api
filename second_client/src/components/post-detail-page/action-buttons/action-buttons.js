@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { PostDetailRightSide, PostActionButton } from "../post-detail-styles";
+import { PostDetailRightSide } from "../post-detail-styles";
+import { PostActionButton } from "./action-buttons-styles";
 
 const ActionButtons = (props) => {
   const params = useParams();

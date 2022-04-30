@@ -64,11 +64,6 @@ export const TextInputContainer = styled.div`
     align-items: center;
 `
 
-export const PostActionButton = styled.button`
-    width: 12rem;
-    height: 2.75rem;
-`
-
 export const SuccesfullySavedPopUp = styled.div`
     position: absolute;
     border: 2px solid red;

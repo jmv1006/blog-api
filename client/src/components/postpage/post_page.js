@@ -44,7 +44,7 @@ const PostPage = () => {
           <CommentsComponent token={token} user={user} />
         </PostContentContainer>
       ) : (
-        "Loading..."
+        <PostContentContainer>"Loading..."</PostContentContainer>
       )}
     </PostPageContainer>
   );

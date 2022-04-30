@@ -61,6 +61,7 @@ const SignInPage = () => {
         setErrors("Error Connecting To Server")
         return
       }
+      res.json().then(res => setErrors(res.info.message))
       setSignInMessage("Sign In")
     });
   };

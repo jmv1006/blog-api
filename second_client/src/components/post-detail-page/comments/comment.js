@@ -54,15 +54,28 @@ const Comment = (props) => {
     }
 
     const deleteComment = () => {
-
-    }
+        fetch(`/posts/${params.postId}/comments/${props.comment._id}`, {
+            method: "DELETE",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+        })
+        .then(res => {
+            if(res.ok) {
+                props.fetchComments()
+                return
+            }
+        })
+    };
 
 
     return(
         <SingleCommentContainer>
             <CommentAuthorAndDelete>
                 <div>{props.comment.author.displayName}</div>
-                <button>X</button>
+                <button onClick={deleteComment}>X</button>
             </CommentAuthorAndDelete>
             <div>
                 <EditCommentForm onSubmit={submitCommentChanges}>

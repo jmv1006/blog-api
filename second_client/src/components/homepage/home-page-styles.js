@@ -9,13 +9,12 @@ export const HomePageContainer = styled.div`
 `
 
 export const PostsDisplayContainer = styled.div`
-    border: 2px solid blue;
     width: 90%;
     height: 52rem;
     display: flex;
     justify-content: space-around;
     align-items: flex-start;
     flex-wrap: wrap;
-    padding: 1rem;
+    padding: 2.5rem;
 `
 

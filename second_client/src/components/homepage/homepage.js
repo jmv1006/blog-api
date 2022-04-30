@@ -26,21 +26,10 @@ const HomePage = () => {
     const mappedPosts = posts.map((post) => 
        <Link key={post._id} to={`/manage/post/${post._id}`} style={{ textDecoration: 'none' }}><PostBox post={post} fetchPosts={fetchPosts} token={token}></PostBox></Link>
     )
-    
-    const handlePostsConditional = () => {
-        if(user) {
-            return(
-                <PostsDisplayContainer>
-                {mappedPosts}
-                </PostsDisplayContainer>
-            )
-        }
-        return <div>Please Sign In</div>
-    }
 
     return(
         <HomePageContainer>
-            {handlePostsConditional()}
+            {user ? <PostsDisplayContainer>{mappedPosts}</PostsDisplayContainer> : <div>Sign In To Access</div>}
         </HomePageContainer>
     )
 }
