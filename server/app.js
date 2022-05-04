@@ -19,13 +19,6 @@ app.use(passport.initialize());
 
 //const populateDB = require('./populateDB')
 
-const checkIfAdmin = (req, res, next) => {
-    console.log('logger')
-    next()
-}
-
-app.use(checkIfAdmin)
-
 //<----- ROUTES HERE ----->
 app.get('/', (req, res) => {
     res.status(200).json('API Working')
