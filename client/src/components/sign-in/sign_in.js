@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   SignInFormContainer,
   SignInForm,
@@ -8,15 +8,16 @@ import {
   SignInFormButton,
 } from "./sign_in_styles";
 import AuthContext from "../context";
+import useAuth from "../../hooks/useAuth";
 
 const SignInPage = () => {
   const Navigate = useNavigate();
   const { userInfo, authToken } = useContext(AuthContext);
 
-  useEffect(() => {});
   const [user, createUser] = userInfo;
   const [token, setToken] = authToken;
-  const [errors, setErrors] = useState("");
+
+  const { isLoading, error, returnedUser, signIn } = useAuth();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -34,39 +35,29 @@ const SignInPage = () => {
     }
   };
 
-  const handleUserCreate = (user) => {
-    createUser(user);
-  };
+  useEffect(() => {
+    if (returnedUser) {
+      setSignInMessage("Success");
+      createUser(returnedUser.user);
+      setToken(returnedUser.token);
+      Navigate("/");
+    }
+  }, [returnedUser]);
+
+  useEffect(() => {
+    if (error) {
+      setSignInMessage("Sign In");
+    }
+  }, [error]);
 
   const handleSignIn = (e) => {
     e.preventDefault();
+    const body = {
+      username: username,
+      password: password,
+    };
     setSignInMessage("Signing In...");
-
-    fetch("/auth/sign-in", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username: username, password: password }),
-    }).then((res) => {
-      if (res.ok) {
-        res.json().then((res) => {
-          handleUserCreate(res.user);
-          setToken(res.token);
-          setSignInMessage("Sign In Successful");
-          Navigate("/");
-        });
-      }
-      if (res.status === 500) {
-        setErrors("Error Connecting To Server");
-        return;
-      }
-      return res.json().then((res) => {
-        setSignInMessage("Sign In");
-        setErrors(res.info.message);
-      });
-    });
+    signIn(body);
   };
 
   return (
@@ -89,9 +80,12 @@ const SignInPage = () => {
           value={password}
           required
         ></SignInInputBox>
+        {error && error.status === 500 ? "Server Error" : null}
+        {error && error.status === 400
+          ? "Incorrect Username or Password"
+          : null}
         <SignInFormButton type="submit">{signInMessage}</SignInFormButton>
       </SignInForm>
-      {errors}
     </SignInFormContainer>
   );
 };

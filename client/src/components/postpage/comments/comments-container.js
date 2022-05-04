@@ -7,9 +7,9 @@ import { useEffect, useState } from "react";
 
 const CommentsComponent = (props) => {
   const params = useParams();
-  const { isError, isLoading, response } = useFetch(
+  const { isError, isLoading, response, handleFetch } = useFetch(
     `/posts/${params.postId}/comments`
-  );
+  ); 
 
   useEffect(() => {
     if (response && !isError) {
@@ -19,14 +19,14 @@ const CommentsComponent = (props) => {
 
   const mappedComments = () =>
     props.comments.map((comment) => (
-      <Comment key={comment.text} comment={comment}></Comment>
+      <Comment key={comment._id} comment={comment}></Comment>
   ));
 
   const createCommentBox = () => {
     return (
       <CreateCommentContainer>
         Create Comment
-        <CreateCommentComponent token={props.token} />
+        <CreateCommentComponent token={props.token} handleFetch={handleFetch}/>
       </CreateCommentContainer>
     );
   };
