@@ -2,23 +2,31 @@ import { CreateCommentContainer, CommentContainer } from "../post_page_styles";
 import Comment from "./comment";
 import { useParams, Link } from "react-router-dom";
 import CreateCommentComponent from "./create-comment-form";
+import useFetch from "../../../hooks/useFetch";
+import { useEffect, useState } from "react";
 
 const CommentsComponent = (props) => {
   const params = useParams();
+  const { isError, isLoading, response } = useFetch(
+    `/posts/${params.postId}/comments`
+  );
+
+  useEffect(() => {
+    if (response && !isError) {
+      props.setComments(response);
+    }
+  }, [response]);
 
   const mappedComments = () =>
     props.comments.map((comment) => (
       <Comment key={comment.text} comment={comment}></Comment>
-    ));
+  ));
 
   const createCommentBox = () => {
     return (
       <CreateCommentContainer>
         Create Comment
-        <CreateCommentComponent
-          token={props.token}
-          fetchComments={props.fetchComments}
-        />
+        <CreateCommentComponent token={props.token} />
       </CreateCommentContainer>
     );
   };
@@ -33,7 +41,8 @@ const CommentsComponent = (props) => {
           <Link to="/sign-in">Sign In To Post Comments</Link>
         </h3>
       )}
-      {props.comments ? mappedComments() : "No Comments"}
+      {props.comments.length > 0 ? mappedComments() : "Post Has No Comments"}
+      {isLoading ? "Loading Comments..." : null}
     </CommentContainer>
   );
 };

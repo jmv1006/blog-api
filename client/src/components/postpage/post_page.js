@@ -11,37 +11,40 @@ import {
 import Parser from "html-react-parser";
 import CommentsComponent from "./comments/comments-container";
 import AuthContext from "../context";
+import useFetch from "../../hooks/useFetch";
 
 const PostPage = () => {
   const params = useParams();
-
   const { userInfo, authToken } = useContext(AuthContext);
+  const { isError, isLoading, response } = useFetch(`/posts/${params.postId}`)
+
+  const [post, setPost] = useState(null);
+  const [comments, setComments] = useState([]);
 
   const [user, setUser] = userInfo;
   const [token, setToken] = authToken;
 
-  const [post, setPost] = useState(null);
-  const [comments, setComments] = useState([]);
-  const [error, setError] = useState(false);
-
   useEffect(() => {
-    FetchPost();
-    fetchComments();
-  }, []);
+    if(response && !isError) {
+      setPost(response)
+    }
+  }, [response])
 
+  /*
   const fetchComments = () => {
     fetch(`/posts/${params.postId}/comments`)
-      .then((res) => res.json())
-      .then((res) => setComments(res))
-      .catch((error) => setError(true));
+      .then(res => {
+        if (!res.ok) throw new Error();
+        return res.json()
+      })
+      .then(res => {
+        setComments(res);
+      })
+      .catch(error => {
+        
+      });
   };
-
-  const FetchPost = () => {
-    fetch(`/posts/${params.postId}`)
-      .then((res) => res.json())
-      .then((res) => setPost(res))
-      .catch((error) => setError(true));
-  };
+  */
 
   return (
     <PostPageContainer>
@@ -59,12 +62,13 @@ const PostPage = () => {
             token={token}
             user={user}
             comments={comments}
-            fetchComments={fetchComments}
+            setComments={setComments}
+            //fetchComments={fetchComments}
           />
         </PostContentContainer>
       ) : (
         <PostContentContainer>
-          {error ? "Error Loading Post" : "Loading..."}
+          {isError ? "Error Loading Post" : "Loading..."}
         </PostContentContainer>
       )}
     </PostPageContainer>

@@ -13,7 +13,7 @@ describe("Comments Container", () => {
         render(
             <BrowserRouter>
                 <TestContext.Provider value={{userInfo: [{}, userInfoMock], authToken: ["", authTokenMock]}}>
-                    <CommentsComponent user={false}/>
+                    <CommentsComponent user={false} comments={[]}/>
                 </TestContext.Provider>
             </BrowserRouter>
         )
@@ -23,7 +23,7 @@ describe("Comments Container", () => {
         render(
             <BrowserRouter>
                 <TestContext.Provider value={{userInfo: [{}, userInfoMock], authToken: ["", authTokenMock]}}>
-                    <CommentsComponent user={false}/>
+                    <CommentsComponent user={false} comments={[]}/>
                 </TestContext.Provider>
             </BrowserRouter>
         )
@@ -35,7 +35,7 @@ describe("Comments Container", () => {
         render(
             <BrowserRouter>
                 <TestContext.Provider value={{userInfo: [{}, userInfoMock], authToken: ["", authTokenMock]}}>
-                    <CommentsComponent user={true}/>
+                    <CommentsComponent user={true} comments={[]}/>
                 </TestContext.Provider>
             </BrowserRouter>
         )
@@ -46,7 +46,7 @@ describe("Comments Container", () => {
         render(
             <BrowserRouter>
                 <TestContext.Provider value={{userInfo: [{}, userInfoMock], authToken: ["", authTokenMock]}}>
-                    <CommentsComponent user={true}/>
+                    <CommentsComponent user={true} comments={[]}/>
                 </TestContext.Provider>
             </BrowserRouter>
         )
@@ -61,7 +61,7 @@ describe("Comments Container", () => {
         render(
             <BrowserRouter>
                 <TestContext.Provider value={{userInfo: [{}, userInfoMock], authToken: ["", authTokenMock]}}>
-                    <CommentsComponent user={null} comments={null}/>
+                    <CommentsComponent user={null} comments={[]}/>
                 </TestContext.Provider>
             </BrowserRouter>
         )

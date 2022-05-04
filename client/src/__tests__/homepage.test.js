@@ -29,6 +29,6 @@ describe("home page", () => {
 
     it("renders an error if posts can not be posted from server", () => {
         render(<BrowserRouter><PostsContainer posts={[]} error={true} /></BrowserRouter>)
-        expect(screen.findByText("Server Error"))
+        expect(screen.getByText("Server Error"))
     })
 })

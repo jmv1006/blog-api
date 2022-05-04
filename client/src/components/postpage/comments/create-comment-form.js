@@ -1,5 +1,5 @@
 import { CommentInputBox, CreateCommentForm } from "../post_page_styles";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router";
 
 const CreateCommentComponent = (props) => {
@@ -30,7 +30,6 @@ const CreateCommentComponent = (props) => {
       .then((res) => {
         setSubmitMessage("Submit");
         setInputValue("");
-        props.fetchComments();
       })
       .catch((error) => {
         if (error) {

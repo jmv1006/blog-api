@@ -1,5 +1,5 @@
 import React from "react";
-import { screen, render } from "@testing-library/react";
+import { screen, render, waitFor } from "@testing-library/react";
 import SignUpPage from "../components/sign-up/sign_up";
 import userEvent from "@testing-library/user-event";
 import { BrowserRouter } from "react-router-dom";
@@ -16,8 +16,7 @@ describe("sign up page", () => {
           value={{
             userInfo: [{}, userInfoMock],
             authToken: ["", authTokenMock],
-          }}
-        >
+          }}>
           <SignUpPage />
         </TestContext.Provider>
       </BrowserRouter>
@@ -58,8 +57,7 @@ describe("sign up page", () => {
     const usernameInput = screen.getByPlaceholderText("E-mail");
     const displayNameInput = screen.getByPlaceholderText("Display Name");
     const passwordInput = screen.getByPlaceholderText("Password");
-    const confirmPasswordInput =
-      screen.getByPlaceholderText("Confirm Password");
+    const confirmPasswordInput = screen.getByPlaceholderText("Confirm Password");
 
     userEvent.type(usernameInput, "test@gmail.com");
     userEvent.type(passwordInput, "test");
@@ -72,4 +70,5 @@ describe("sign up page", () => {
     expect(displayNameInput.value).toBe("Test User");
     expect(confirmPasswordInput.value).toBe("test");
   });
+
 });

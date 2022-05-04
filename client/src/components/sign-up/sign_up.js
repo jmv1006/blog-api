@@ -4,7 +4,7 @@ import {
   SignUpInputBox,
   SignUpFormButton,
 } from "./sign_up_styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
@@ -17,7 +17,7 @@ const SignUpPage = () => {
     confirmedPassword: "",
   });
 
-  const [errors, setErrors] = useState([]);
+  const [error, setError] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("Submit");
 
   const handleChange = (e) => {
@@ -29,9 +29,8 @@ const SignUpPage = () => {
     });
   };
 
-  const postSignUp = (e) => {
-    setSubmitMessage("Submitting...");
-    e.preventDefault();
+  const handleSignUp = (e) => {
+    e.preventDefault()
     fetch("/auth/sign-up", {
       method: "POST",
       headers: {
@@ -39,26 +38,21 @@ const SignUpPage = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formInfo),
-    }).then((res) => {
-      if (res.ok) {
-        setSubmitMessage("Submit");
-        Navigate("/sign-in");
-        return;
+    })
+    .then(res => {
+      if(!res.ok) {
+        throw new Error()
       }
-      res.json().then((res) => {
-        if (res.errors) {
-          setSubmitMessage("Submit");
-          setErrors(res.errors);
-          return;
-        }
-        const errArr = [];
-        errArr.push(res);
-        setErrors(errArr);
-      });
-    });
-  };
-
-  const mappedErrors = errors.map((error) => <div key={error}>{error}</div>);
+      res.json()
+    })
+    .then(res => {
+      setSubmitMessage("Submit")
+      Navigate('/sign-in')
+    })
+    .catch(error => {
+      setError(true)
+    }) 
+  }
 
   return (
     <SignUpPageContainer>
@@ -96,10 +90,10 @@ const SignUpPage = () => {
           onChange={handleChange}
           required
         ></SignUpInputBox>
-        {mappedErrors}
-        <SignUpFormButton onClick={postSignUp}>
+        <SignUpFormButton onClick={handleSignUp}>
           {submitMessage}
         </SignUpFormButton>
+        {error ? "Error Signing Up" : null}
       </SignUpForm>
     </SignUpPageContainer>
   );
