@@ -1,4 +1,9 @@
-import { SignUpPageContainer, SignUpForm, SignUpInputBox, SignUpFormButton } from "./sign_up_styles";
+import {
+  SignUpPageContainer,
+  SignUpForm,
+  SignUpInputBox,
+  SignUpFormButton,
+} from "./sign_up_styles";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -13,6 +18,7 @@ const SignUpPage = () => {
   });
 
   const [errors, setErrors] = useState([]);
+  const [submitMessage, setSubmitMessage] = useState("Submit");
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -24,6 +30,7 @@ const SignUpPage = () => {
   };
 
   const postSignUp = (e) => {
+    setSubmitMessage("Submitting...");
     e.preventDefault();
     fetch("/auth/sign-up", {
       method: "POST",
@@ -34,13 +41,13 @@ const SignUpPage = () => {
       body: JSON.stringify(formInfo),
     }).then((res) => {
       if (res.ok) {
-        res.json().then((res) => {
-          Navigate("/sign-in");
-        });
+        setSubmitMessage("Submit");
+        Navigate("/sign-in");
         return;
       }
       res.json().then((res) => {
         if (res.errors) {
+          setSubmitMessage("Submit");
           setErrors(res.errors);
           return;
         }
@@ -89,8 +96,10 @@ const SignUpPage = () => {
           onChange={handleChange}
           required
         ></SignUpInputBox>
-          {mappedErrors}
-        <SignUpFormButton onClick={postSignUp}>Submit</SignUpFormButton>
+        {mappedErrors}
+        <SignUpFormButton onClick={postSignUp}>
+          {submitMessage}
+        </SignUpFormButton>
       </SignUpForm>
     </SignUpPageContainer>
   );

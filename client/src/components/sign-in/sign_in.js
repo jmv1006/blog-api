@@ -1,18 +1,26 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
-import { SignInFormContainer, SignInForm, SignInTitle, SignInInputBox, SignInFormButton } from "./sign_in_styles";
+import {
+  SignInFormContainer,
+  SignInForm,
+  SignInTitle,
+  SignInInputBox,
+  SignInFormButton,
+} from "./sign_in_styles";
+import AuthContext from "../context";
 
 const SignInPage = () => {
   const Navigate = useNavigate();
+  const { userInfo, authToken } = useContext(AuthContext);
 
-  const { userInfo, authToken } = useOutletContext();
-  const [user, setUser] = userInfo;
+  useEffect(() => {});
+  const [user, createUser] = userInfo;
   const [token, setToken] = authToken;
   const [errors, setErrors] = useState("");
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [signInMessage, setSignInMessage] = useState("Sign In")
+  const [signInMessage, setSignInMessage] = useState("Sign In");
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -26,16 +34,14 @@ const SignInPage = () => {
     }
   };
 
-  const postDatas = (e) => {
-    e.preventDefault();
+  const handleUserCreate = (user) => {
+    createUser(user);
+  };
 
-    const body = {
-      username: username,
-      password: password
-    }
-    
+  const handleSignIn = (e) => {
     e.preventDefault();
-    setSignInMessage("Signing In...")
+    setSignInMessage("Signing In...");
+
     fetch("/auth/sign-in", {
       method: "POST",
       headers: {
@@ -46,18 +52,18 @@ const SignInPage = () => {
     }).then((res) => {
       if (res.ok) {
         res.json().then((res) => {
-          setUser(res.user);
+          handleUserCreate(res.user);
           setToken(res.token);
-          setSignInMessage("Sign In Successful")
+          setSignInMessage("Sign In Successful");
+          Navigate("/");
         });
-        return Navigate("/");
       }
-      if(res.status === 500) {
-          setErrors("Error Connecting To Server")
-          return
+      if (res.status === 500) {
+        setErrors("Error Connecting To Server");
+        return;
       }
       return res.json().then((res) => {
-        setSignInMessage("Sign In")
+        setSignInMessage("Sign In");
         setErrors(res.info.message);
       });
     });
@@ -65,8 +71,8 @@ const SignInPage = () => {
 
   return (
     <SignInFormContainer>
-      <SignInTitle>Sign In</SignInTitle>
-      <SignInForm onSubmit={postDatas}>
+      <SignInTitle>Sign In Here</SignInTitle>
+      <SignInForm onSubmit={handleSignIn}>
         <SignInInputBox
           type="email"
           placeholder="email"
@@ -83,9 +89,9 @@ const SignInPage = () => {
           value={password}
           required
         ></SignInInputBox>
-        {errors}
-        <SignInFormButton type="submit">Sign In</SignInFormButton>
+        <SignInFormButton type="submit">{signInMessage}</SignInFormButton>
       </SignInForm>
+      {errors}
     </SignInFormContainer>
   );
 };

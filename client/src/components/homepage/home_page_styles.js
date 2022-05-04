@@ -18,4 +18,5 @@ export const CardContainer = styled.div`
     align-items: flex-start;
     gap: 5rem;
     flex-wrap: wrap;
+    margin-top: 1rem;
 `

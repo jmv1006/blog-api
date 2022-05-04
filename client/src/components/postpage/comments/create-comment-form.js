@@ -1,31 +1,12 @@
 import { CommentInputBox, CreateCommentForm } from "../post_page_styles";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import useFetchPost from "../../../hooks/useFetchPost";
 
 const CreateCommentComponent = (props) => {
   const params = useParams();
 
-  const { returnedData, postData, postIsLoading, postError } = useFetchPost(); //URL
-
   const [inputValue, setInputValue] = useState("");
-  const [error, setError] = useState("");
   const [submitMessage, setSubmitMessage] = useState("Submit");
-
-  useEffect(() => {
-    if (postIsLoading) {
-      setSubmitMessage("Submitting...");
-    }
-  }, [postIsLoading]);
-
-  useEffect(() => {
-    //data is returned AND there was no errors with request. (Success)
-    if (returnedData && !postError) {
-      props.fetchData(`/posts/${params.postId}/comments`);
-      setSubmitMessage("Submit");
-      setInputValue("");
-    }
-  }, [returnedData]);
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
@@ -34,7 +15,28 @@ const CreateCommentComponent = (props) => {
   const createComment = (e) => {
     e.preventDefault();
     const text = inputValue;
-    postData(`/posts/${params.postId}/comments`, { text: text }, props.token);
+    setSubmitMessage("Submitting...");
+
+    fetch(`/posts/${params.postId}/comments`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + props.token,
+      },
+      body: JSON.stringify({ text: text }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setSubmitMessage("Submit");
+        setInputValue("");
+        props.fetchComments();
+      })
+      .catch((error) => {
+        if (error) {
+          setSubmitMessage("Error");
+        }
+      });
   };
 
   return (
@@ -47,7 +49,6 @@ const CreateCommentComponent = (props) => {
         onChange={handleChange}
         required
       ></CommentInputBox>
-      {error}
       <button type="submit">{submitMessage}</button>
     </CreateCommentForm>
   );

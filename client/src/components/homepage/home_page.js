@@ -1,33 +1,38 @@
 import { useEffect, useState } from "react";
-import PostCard from "./post_card/post_card";
 import { HomePageContainer, CardContainer } from "./home_page_styles";
 import Welcome from "./welcome/welcome";
-import useFetchGet from '../../hooks/useFetchGet';
+import PostsContainer from "./posts/postsContainer";
 
 const HomePage = () => {
-    
-    const [posts, setPosts] = useState([]);
-    const { data, isLoading, error } = useFetchGet('/posts');
+  const [posts, setPosts] = useState([]);
+  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-       if(data === null) {
-           return
-       }
-        setPosts(data)
-    }, [data])
-    
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
-    const mappedPosts = posts.map((post) =>
-        <PostCard key={post._id} post={post} />
-    );
+  const fetchPosts = () => {
+    setIsLoading(true);
+    fetch("/posts")
+      .then((res) => res.json())
+      .then((res) => {
+        setPosts(res);
+        setIsLoading(false);
+        return;
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setError(true);
+      });
+  };
 
-    return(
-        <HomePageContainer>
-            <Welcome />
-            {isLoading ? <CardContainer>Loading...</CardContainer> : <CardContainer>{mappedPosts}</CardContainer>}
-            {error ? <div>Server Error</div> : null}
-        </HomePageContainer>
-    )
-}
+  return (
+    <HomePageContainer>
+      <Welcome />
+      <PostsContainer posts={posts} isLoading={isLoading} error={error} />
+    </HomePageContainer>
+  );
+};
 
 export default HomePage;

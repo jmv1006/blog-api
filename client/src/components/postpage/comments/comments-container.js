@@ -1,37 +1,24 @@
-import {
-  CreateCommentContainer,
-  CommentContainer
-} from "../post_page_styles";
+import { CreateCommentContainer, CommentContainer } from "../post_page_styles";
 import Comment from "./comment";
-import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import useFetchGet from "../../../hooks/useFetchGet";
 import CreateCommentComponent from "./create-comment-form";
 
 const CommentsComponent = (props) => {
   const params = useParams();
 
-  const { fetchData, data, isLoading, getError } = useFetchGet(
-    `/posts/${params.postId}/comments`
-  );
-
-  const [comments, setComments] = useState([]);
-
-  useEffect(() => {
-    if(data && !getError) {
-      setComments(data)
-    }
-  }, [data])
-
-  const mappedComments = comments.map((comment) => (
-    <Comment key={comment._id} comment={comment}></Comment>
-  ));
+  const mappedComments = () =>
+    props.comments.map((comment) => (
+      <Comment key={comment.text} comment={comment}></Comment>
+    ));
 
   const createCommentBox = () => {
     return (
       <CreateCommentContainer>
         Create Comment
-        <CreateCommentComponent token={props.token} fetchData={fetchData}/>
+        <CreateCommentComponent
+          token={props.token}
+          fetchComments={props.fetchComments}
+        />
       </CreateCommentContainer>
     );
   };
@@ -39,8 +26,14 @@ const CommentsComponent = (props) => {
   return (
     <CommentContainer>
       Comments:
-      {props.user ? createCommentBox(): <h3><Link to="/sign-in">Sign In To Post Comments</Link></h3>}
-      {comments.length > 0 ? mappedComments : <div>No Comments Here!</div>}
+      {props.user ? (
+        createCommentBox()
+      ) : (
+        <h3>
+          <Link to="/sign-in">Sign In To Post Comments</Link>
+        </h3>
+      )}
+      {props.comments ? mappedComments() : "No Comments"}
     </CommentContainer>
   );
 };

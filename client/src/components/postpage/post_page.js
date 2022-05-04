@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useParams, useOutletContext } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import {
   PostPageContainer,
   AuthorTitleContainer,
@@ -9,26 +9,40 @@ import {
   TextContainer,
 } from "./post_page_styles";
 import Parser from "html-react-parser";
-import useFetchGet from '../../hooks/useFetchGet'
 import CommentsComponent from "./comments/comments-container";
+import AuthContext from "../context";
 
 const PostPage = () => {
   const params = useParams();
 
-  const { userInfo, authToken } = useOutletContext();
+  const { userInfo, authToken } = useContext(AuthContext);
 
   const [user, setUser] = userInfo;
   const [token, setToken] = authToken;
 
   const [post, setPost] = useState(null);
-  const {data, isLoading, error} = useFetchGet(`/posts/${params.postId}`)
+  const [comments, setComments] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    if(data != null) {
-      setPost(data)
-    }
-  }, [data]);
-  
+    FetchPost();
+    fetchComments();
+  }, []);
+
+  const fetchComments = () => {
+    fetch(`/posts/${params.postId}/comments`)
+      .then((res) => res.json())
+      .then((res) => setComments(res))
+      .catch((error) => setError(true));
+  };
+
+  const FetchPost = () => {
+    fetch(`/posts/${params.postId}`)
+      .then((res) => res.json())
+      .then((res) => setPost(res))
+      .catch((error) => setError(true));
+  };
+
   return (
     <PostPageContainer>
       {post ? (
@@ -41,10 +55,17 @@ const PostPage = () => {
             <TitleContainer>{post.title}</TitleContainer>
           </TopContainer>
           <TextContainer>{Parser(post.text)}</TextContainer>
-          <CommentsComponent token={token} user={user} />
+          <CommentsComponent
+            token={token}
+            user={user}
+            comments={comments}
+            fetchComments={fetchComments}
+          />
         </PostContentContainer>
       ) : (
-        <PostContentContainer>"Loading..."</PostContentContainer>
+        <PostContentContainer>
+          {error ? "Error Loading Post" : "Loading..."}
+        </PostContentContainer>
       )}
     </PostPageContainer>
   );
