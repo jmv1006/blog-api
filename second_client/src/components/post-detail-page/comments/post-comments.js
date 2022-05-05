@@ -6,8 +6,6 @@ import Comment from "./comment";
 const PostComments = (props) => {
     const params = useParams();
 
-    const [comments, setComments] = useState([])
-
     useEffect(() => {
         fetchComments();
     }, [])
@@ -16,7 +14,7 @@ const PostComments = (props) => {
         fetch(`/posts/${params.postId}/comments`).then((res) => {
           if (res.ok) {
             res.json().then((res) => {
-             setComments(res)
+             props.setComments(res)
             });
             return;
           }
@@ -24,14 +22,20 @@ const PostComments = (props) => {
         });
     };
 
-    const mappedComments = comments.map((comment) => 
+    const mappedComments = props.comments.map((comment) => 
         <Comment key={comment._id} comment={comment} fetchComments={fetchComments}></Comment>
     )
+
+    const handleComments = () => {
+        
+    }
 
     return(
         <CommentsContainer>
             All comments:
             {mappedComments}
+            <div>{props.comments.length === 0 && "Post Has No Comments"}</div>
+            <div>{!props.comments && "Error Getting Comments"}</div>
         </CommentsContainer>
     )
 };

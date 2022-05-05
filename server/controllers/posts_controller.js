@@ -71,7 +71,7 @@ exports.delete_post = (req, res) => {
                 return res.status(400).json("Deleted Post, but had an error deleting comments.")
             }
         })
-        return res.status(200).json('Succesfully deleted post and comments')
+        return res.status(200).json({isDeleted: true})
     })
 };
 
