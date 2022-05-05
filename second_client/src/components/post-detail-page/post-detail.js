@@ -1,20 +1,21 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   PostDetailContainer,
   PostDetailsWrapper,
   PostDetailTopContainer
 } from "./post-detail-styles";
-import { useOutletContext, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PostDetailForm from "./form/post-detail-form";
 import PostComments from "./comments/post-comments";
 import ActionButtons from "./action-buttons/action-buttons";
+import AuthContext from "../../contexts/AuthContext";
 
 const PostDetailPage = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const { userInfo, authToken } = useOutletContext();
+  const { userInfo, authToken } = useContext(AuthContext);
   const [user, setUser] = userInfo;
   const [token, setToken] = authToken;
 

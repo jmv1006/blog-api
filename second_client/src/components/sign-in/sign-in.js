@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { SignInFormContainer, SignInForm, SignInTitle, SignInInputBox, SignInFormButton } from "./sign-in-styles";
+import AuthContext from "../../contexts/AuthContext";
 
 const SignInPage = () => {
   const Navigate = useNavigate();
 
-  const { userInfo, authToken } = useOutletContext();
+  const { userInfo, authToken } = useContext(AuthContext);
 
   const [user, setUser] = userInfo;
   const [token, setToken] = authToken;

@@ -6,9 +6,12 @@ import {
 } from "./sign_up_styles";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const SignUpPage = () => {
   const Navigate = useNavigate();
+
+  const { error, signUp, isDone } = useAuth();
 
   const [formInfo, setFormInfo] = useState({
     username: "",
@@ -17,8 +20,20 @@ const SignUpPage = () => {
     confirmedPassword: "",
   });
 
-  const [error, setError] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("Submit");
+
+  useEffect(() => {
+    if(isDone && !error) {
+      setSubmitMessage("Successful")
+      Navigate('/sign-in')
+    }
+  }, [isDone])
+
+  useEffect(() => {
+    if(error) {
+      //error exists
+    }
+  }, [error])
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -31,27 +46,8 @@ const SignUpPage = () => {
 
   const handleSignUp = (e) => {
     e.preventDefault()
-    fetch("/auth/sign-up", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formInfo),
-    })
-    .then(res => {
-      if(!res.ok) {
-        throw new Error()
-      }
-      res.json()
-    })
-    .then(res => {
-      setSubmitMessage("Submit")
-      Navigate('/sign-in')
-    })
-    .catch(error => {
-      setError(true)
-    }) 
+    setSubmitMessage("Submitting...")
+    signUp(formInfo);
   }
 
   return (
@@ -90,10 +86,10 @@ const SignUpPage = () => {
           onChange={handleChange}
           required
         ></SignUpInputBox>
+        {error ? "Error Signing Up" : null}
         <SignUpFormButton onClick={handleSignUp}>
           {submitMessage}
         </SignUpFormButton>
-        {error ? "Error Signing Up" : null}
       </SignUpForm>
     </SignUpPageContainer>
   );

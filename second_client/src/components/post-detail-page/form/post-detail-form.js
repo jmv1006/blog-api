@@ -5,11 +5,11 @@ import {
   TextInputContainer,
 } from "../post-detail-styles";
 import { Editor } from "@tinymce/tinymce-react";
-import { useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import AuthContext from "../../../contexts/AuthContext";
 
 const PostDetailForm = (props) => {
-  const { userInfo, authToken } = useOutletContext();
+  const { userInfo, authToken } = useContext(AuthContext);
   const [token, setToken] = authToken;
 
   const [apiKey, setAPIKey] = useState("");

@@ -10,11 +10,11 @@ export const HomePageContainer = styled.div`
 
 export const PostsDisplayContainer = styled.div`
     width: 90%;
-    height: 52rem;
     display: flex;
     justify-content: space-around;
     align-items: flex-start;
     flex-wrap: wrap;
     padding: 2.5rem;
+    gap: 1rem;
 `
 

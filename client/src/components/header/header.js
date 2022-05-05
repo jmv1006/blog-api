@@ -29,7 +29,7 @@ const Header = (props) => {
   return (
     <HeaderContainer>
       <Link to="/" style={{ textDecoration: "none" }}>
-        <HeaderItem primary>Blog API</HeaderItem>
+        <HeaderItem primary>BlogIt</HeaderItem>
       </Link>
       {headerButtonDisplay()}
     </HeaderContainer>

@@ -1,15 +1,15 @@
 import { HomePageContainer, PostsDisplayContainer } from "./home-page-styles";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import PostBox from "./post-box/post-box";
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import AuthContext from "../../contexts/AuthContext";
 
 const HomePage = () => {
-    const {userInfo, authToken} = useOutletContext();
+    const {userInfo, authToken} = useContext(AuthContext);
 
     const [posts, setPosts] = useState([])
     const [user, setUser] = userInfo;
     const [token, setToken] = authToken;
-
 
     useEffect(() => {
         fetchPosts()
@@ -26,10 +26,10 @@ const HomePage = () => {
     const mappedPosts = posts.map((post) => 
        <Link key={post._id} to={`/manage/post/${post._id}`} style={{ textDecoration: 'none' }}><PostBox post={post} fetchPosts={fetchPosts} token={token}></PostBox></Link>
     )
-
+    
     return(
         <HomePageContainer>
-            {user ? <PostsDisplayContainer>{mappedPosts.length > 0 ? mappedPosts: "Loading Posts..."}</PostsDisplayContainer> : <div>Sign In To Access</div>}
+            {user ? <PostsDisplayContainer>{mappedPosts.length > 0 ? mappedPosts: "Loading Posts..."}</PostsDisplayContainer> : "Sign In To Access"}
         </HomePageContainer>
     )
 }

@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SingleCommentContainer, CommentAuthorAndDelete, SaveChangesButton, EditCommentForm } from "./comment-styles";
 import { useOutletContext, useParams } from "react-router-dom";
+import AuthContext from "../../../contexts/AuthContext";
 
 const Comment = (props) => {
 
@@ -10,7 +11,7 @@ const Comment = (props) => {
     const[buttonText, setButtonText] = useState('Save')
 
     const params = useParams();
-    const { userInfo, authToken } = useOutletContext();
+    const { userInfo, authToken } = useContext(AuthContext);
     const [token, setToken] = authToken;
 
     useEffect(() => {

@@ -1,17 +1,18 @@
 import { Editor } from "@tinymce/tinymce-react";
-import { useEffect, useState } from "react";
-import { useOutletContext, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   CreatePostContainer,
   CreatePostForm,
   PageTitle,
 } from "./create-post-styles";
 import { PostActionButton } from "../post-detail-page/action-buttons/action-buttons-styles";
+import AuthContext from '../../contexts/AuthContext'
 
 const CreatePost = () => {
   const navigate = useNavigate();
 
-  const { userInfo, authToken } = useOutletContext();
+  const { userInfo, authToken } = useContext(AuthContext);
   const [user, setUser] = userInfo;
   const [token, setToken] = authToken;
 
