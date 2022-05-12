@@ -7,12 +7,16 @@ import useFetch from "../../hooks/useFetch";
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(false);
-  const { isError, isLoading, response } = useFetch("/posts");
+  const { isError, isLoading, response, handleFetch } = useFetch();
 
   useEffect(() => {
-    if(response && !isError) {
-      setPosts(response)
-    }
+    handleFetch('/posts')
+  }, [])
+
+  useEffect(() => {
+      if(response) {
+        setPosts(response)
+      }
   }, [response]);
 
   return (

@@ -27,6 +27,7 @@ const HomePage = (props) => {
         if(mappedPosts.length > 0) {
             return <PostsDisplayContainer>{mappedPosts}</PostsDisplayContainer>
         }
+        return <div>No Posts!</div>
     };
 
     return(

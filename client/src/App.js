@@ -3,7 +3,7 @@ import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import "./app.css";
 import { useState } from "react";
-import AuthContext from "./components/context";
+import AuthContext from "./contexts/context";
 
 function App() {
   const [user, setUser] = useState(null);

@@ -1,16 +1,12 @@
 import { useState, useEffect } from "react";
 
-const useFetch = (url) => {
+const useFetch = () => {
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState(null);
 
-  useEffect(() => {
-    setIsLoading(true);
-    handleFetch(url);
-  }, [url]);
-
   const handleFetch = (url) => {
+    setIsLoading(true)
     fetch(url)
       .then((res) => {
         if (!res.ok) {
@@ -21,6 +17,7 @@ const useFetch = (url) => {
       .then((res) => {
         setIsLoading(false);
         setResponse(res);
+        return res;
       })
       .catch((error) => {
         setIsLoading(false);
