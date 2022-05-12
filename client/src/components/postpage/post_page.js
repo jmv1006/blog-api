@@ -1,78 +1,67 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
-  PostPageContainer,
-  AuthorTitleContainer,
-  TitleContainer,
-  TopContainer,
-  PostContentContainer,
-  TextContainer,
+  PostPage,
 } from "./post_page_styles";
-import Parser from "html-react-parser";
-import CommentsComponent from "./comments/comments-container";
-import AuthContext from "../context";
+import AuthContext from "../../contexts/context";
 import useFetch from "../../hooks/useFetch";
 
-const PostPage = () => {
+//Seperate Component
+import PostComments from "./comments/comments-container";
+import PostInfo from "./post-info/post-info";
+
+const PostPageContainer = () => {
   const params = useParams();
   const { userInfo, authToken } = useContext(AuthContext);
-  const { isError, isLoading, response } = useFetch(`/posts/${params.postId}`)
+  const { handleFetch } = useFetch();
 
   const [post, setPost] = useState(null);
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState(null);
 
   const [user, setUser] = userInfo;
   const [token, setToken] = authToken;
 
   useEffect(() => {
-    if(response && !isError) {
-      setPost(response)
-    }
-  }, [response])
+    fetchPosts()
+    fetchComments()
+  }, [])
 
-  /*
+  const fetchPosts = () => {
+    handleFetch(`/posts/${params.postId}`)
+    fetch(`/posts/${params.postId}`)
+    .then(res => {
+      if(!res.ok){
+        throw new Error()
+      }
+      return res.json()
+    })
+    .then(res => {
+      setPost(res)
+    })
+    .catch(error => console.log(error))
+  }
+
   const fetchComments = () => {
     fetch(`/posts/${params.postId}/comments`)
-      .then(res => {
-        if (!res.ok) throw new Error();
-        return res.json()
-      })
-      .then(res => {
-        setComments(res);
-      })
-      .catch(error => {
-        
-      });
+    .then(res => {
+      if(!res.ok){
+        throw new Error()
+      }
+      return res.json()
+    })
+    .then(res => {
+      setComments(res)
+    })
+    .catch(error => console.log(error))
   };
-  */
+  
 
   return (
-    <PostPageContainer>
-      {post ? (
-        <PostContentContainer>
-          <TopContainer>
-            <AuthorTitleContainer>
-              <div>By: {post.author.displayName}</div>
-              <div>Published On: {post.date}</div>
-            </AuthorTitleContainer>
-            <TitleContainer>{post.title}</TitleContainer>
-          </TopContainer>
-          <TextContainer>{Parser(post.text)}</TextContainer>
-          <CommentsComponent
-            token={token}
-            user={user}
-            comments={comments}
-            setComments={setComments}
-            //fetchComments={fetchComments}
-          />
-        </PostContentContainer>
-      ) : (
-        <PostContentContainer>
-          {isError ? "Error Loading Post" : "Loading..."}
-        </PostContentContainer>
-      )}
-    </PostPageContainer>
+    <PostPage>
+      <PostInfo post={post} />
+      <PostComments post={post} user={user} comments={comments}/>
+    </PostPage>
   );
 };
 
-export default PostPage;
+export default PostPageContainer;

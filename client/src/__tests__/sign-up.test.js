@@ -3,7 +3,7 @@ import { screen, render, waitFor } from "@testing-library/react";
 import SignUpPage from "../components/sign-up/sign_up";
 import userEvent from "@testing-library/user-event";
 import { BrowserRouter } from "react-router-dom";
-import TestContext from "../components/context";
+import AuthContext from '../contexts/context';
 
 const userInfoMock = jest.fn();
 const authTokenMock = jest.fn();
@@ -12,13 +12,13 @@ describe("sign up page", () => {
   it("renders without errors", () => {
     render(
       <BrowserRouter>
-        <TestContext.Provider
+        <AuthContext.Provider
           value={{
             userInfo: [{}, userInfoMock],
             authToken: ["", authTokenMock],
           }}>
           <SignUpPage />
-        </TestContext.Provider>
+        </AuthContext.Provider>
       </BrowserRouter>
     );
   });
@@ -26,14 +26,14 @@ describe("sign up page", () => {
   it("succesfully calls postSignUp on button click", () => {
     render(
       <BrowserRouter>
-        <TestContext.Provider
+        <AuthContext.Provider
           value={{
             userInfo: [{}, userInfoMock],
             authToken: ["", authTokenMock],
           }}
         >
           <SignUpPage />
-        </TestContext.Provider>
+        </AuthContext.Provider>
       </BrowserRouter>
     );
     expect(screen.findByText("Submitting..."));
@@ -42,14 +42,14 @@ describe("sign up page", () => {
   it("succesfully handles user input", () => {
     render(
       <BrowserRouter>
-        <TestContext.Provider
+        <AuthContext.Provider
           value={{
             userInfo: [{}, userInfoMock],
             authToken: ["", authTokenMock],
           }}
         >
           <SignUpPage />
-        </TestContext.Provider>
+        </AuthContext.Provider>
       </BrowserRouter>
     );
 

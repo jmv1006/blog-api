@@ -7,7 +7,7 @@ import {
   SignInInputBox,
   SignInFormButton,
 } from "./sign_in_styles";
-import AuthContext from "../context";
+import AuthContext from "../../contexts/context";
 import useAuth from "../../hooks/useAuth";
 
 const SignInPage = () => {

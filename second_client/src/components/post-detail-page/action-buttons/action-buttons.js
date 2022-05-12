@@ -1,12 +1,14 @@
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { PostDetailRightSide } from "../post-detail-styles";
 import { PostActionButton } from "./action-buttons-styles";
 import Modal from "../../modal/modal";
+import useTestFetch from "../../../hooks/useTest";
 
 const ActionButtons = (props) => {
   const params = useParams();
   const navigate = useNavigate();
+  const { isLoading, response, isError, postData } = useTestFetch();
 
   const [saveMessage, setSaveMessage] = useState("Save Changes");
   const [publishStatus, setPublishedStatus] = useState("");
@@ -17,83 +19,78 @@ const ActionButtons = (props) => {
   const token = props.token;
 
   useEffect(() => {
-      if(post.isPublished) {
-          setPublishedStatus('Unpublish')
-          return
+    if (post.isPublished) {
+      return setPublishedStatus("Unpublish");
+    }
+    setPublishedStatus("Publish");
+  });
+
+  useEffect(() => {
+    if (response) {
+      if (response.isDeleted) {
+        navigate("/");
+        return;
       }
-      setPublishedStatus('Publish')
-  })
-  
+      props.handleFetch(`/posts/${params.postId}`);
+      setSaveMessage("Save Changes");
+    }
+  }, [response]);
+
   const updatePost = () => {
-    setSaveMessage("Saving...");
-    fetch(`/posts/${params.postId}`, {
+    const body = { title: post.title, text: post.text };
+    const options = {
       method: "PUT",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },
-      body: JSON.stringify({ title: post.title, text: post.text }),
-    }).then((res) => {
-      if (res.ok) {
-        //Succesfully updated post
-        setSaveMessage("Saved!");
-
-        setTimeout(() => {
-          setSaveMessage("Save Changes");
-        }, 1500);
-
-        return props.fetchPost();
-      }
-      setSaveMessage("Error Saving");
-    });
+      body: JSON.stringify(body),
+    };
+    setSaveMessage("Saving...");
+    postData(`/posts/${params.postId}`, options);
   };
 
   const togglePostPublishStatus = () => {
-    fetch(`/posts/${post._id}/toggle-publish`, {
-      method: "POST",
+    const body = { isPublished: post.isPublished ? true : false };
+    const options = {
+      method: "PUT",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },
-      body: JSON.stringify({ isPublished: post.isPublished }),
-    }).then((res) => {
-      res.json().then((res) => {
-          if(res.isPublished) {
-              setPublishedStatus('Unpublish')
-          }
-          setPublishedStatus('Publish')
-      })
-      props.fetchPost();
-    });
+      body: JSON.stringify(body),
+    };
+    postData(`/posts/${params.postId}/toggle-publish`, options);
   };
 
   const deletePost = () => {
-    setDeleteStatus("Deleting...")
-    fetch(`/posts/${post._id}`, {
+    setDeleteStatus("Deleting...");
+    const options = {
       method: "DELETE",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },
-    }).then((res) => {
-        if(res.ok) {
-          //Successfully Deleted Post
-          setDeleteStatus("Successful")
-          navigate("/")
-          return
-        }
-        alert("error deleting post")
-    });
-  }
+    };
+    postData(`/posts/${params.postId}`, options);
+  };
 
   return (
     <PostDetailRightSide>
-      <Modal isOpen={isOpen} setIsOpen={setIsOpen} text={"Are you sure you want to delete this post?"} actionButtonText={deleteStatus} action={deletePost}/>
+      <Modal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        text={"Are you sure you want to delete this post?"}
+        actionButtonText={deleteStatus}
+        action={deletePost}
+      />
       <PostActionButton onClick={updatePost}>{saveMessage}</PostActionButton>
-      <PostActionButton onClick={() => setIsOpen(true)}>Delete</PostActionButton>
+      <PostActionButton onClick={() => setIsOpen(true)}>
+        Delete
+      </PostActionButton>
       <PostActionButton onClick={togglePostPublishStatus}>
         {publishStatus}
       </PostActionButton>

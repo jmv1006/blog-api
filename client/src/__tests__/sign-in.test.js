@@ -3,7 +3,7 @@ import { screen, render, getByRole } from "@testing-library/react";
 import SignInPage from "../components/sign-in/sign_in";
 import userEvent from "@testing-library/user-event";
 import { BrowserRouter } from "react-router-dom";
-import TestContext from "../components/context";
+import AuthContext from "../contexts/context";
 
 const userInfoMock = jest.fn();
 const authTokenMock = jest.fn();
@@ -12,14 +12,14 @@ describe("Sign In Page", () => {
   it("renders without error", () => {
     render(
       <BrowserRouter>
-        <TestContext.Provider
+        <AuthContext.Provider
           value={{
             userInfo: [{}, userInfoMock],
             authToken: ["", authTokenMock],
           }}
         >
           <SignInPage />
-        </TestContext.Provider>
+        </AuthContext.Provider>
       </BrowserRouter>
     );
   });
@@ -27,14 +27,14 @@ describe("Sign In Page", () => {
   it("successfully calls handleSignIn method on button push", async () => {
     render(
       <BrowserRouter>
-        <TestContext.Provider
+        <AuthContext.Provider
           value={{
             userInfo: [{}, userInfoMock],
             authToken: ["", authTokenMock],
           }}
         >
           <SignInPage />
-        </TestContext.Provider>
+        </AuthContext.Provider>
       </BrowserRouter>
     );
 
@@ -47,14 +47,14 @@ describe("Sign In Page", () => {
   it("succesfully handles user input", () => {
     render(
       <BrowserRouter>
-        <TestContext.Provider
+        <AuthContext.Provider
           value={{
             userInfo: [{}, userInfoMock],
             authToken: ["", authTokenMock],
           }}
         >
           <SignInPage />
-        </TestContext.Provider>
+        </AuthContext.Provider>
       </BrowserRouter>
     );
 

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const PostPageContainer = styled.div`
+export const PostPage = styled.div`
     width: 95%;
     display: flex;
     flex-direction: column;
