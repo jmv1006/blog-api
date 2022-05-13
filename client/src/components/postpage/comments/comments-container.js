@@ -19,7 +19,7 @@ const PostComments = (props) => {
       return (
         <CreateCommentContainer>
           Create Comment
-          <CreateCommentComponent token={props.token}></CreateCommentComponent>
+          <CreateCommentComponent token={props.token} fetchComments={props.fetchComments}></CreateCommentComponent>
         </CreateCommentContainer>
       );
     }

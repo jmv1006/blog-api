@@ -3,8 +3,11 @@ import { HomePageContainer, CardContainer } from "./home_page_styles";
 import Welcome from "./welcome/welcome";
 import PostsContainer from "./posts/postsContainer";
 import useFetch from "../../hooks/useFetch";
+import { useNavigate } from "react-router";
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(false);
   const { isError, isLoading, response, handleFetch } = useFetch();
@@ -23,6 +26,7 @@ const HomePage = () => {
     <HomePageContainer>
       <Welcome />
       <PostsContainer posts={posts} isLoading={isLoading} error={isError} />
+      {isError && navigate("/error")}
     </HomePageContainer>
   );
 };

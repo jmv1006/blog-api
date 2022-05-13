@@ -37,6 +37,7 @@ const SignInPage = () => {
 
   useEffect(() => {
     if (returnedUser) {
+      console.log(returnedUser)
       setSignInMessage("Success");
       createUser(returnedUser.user);
       setToken(returnedUser.token);

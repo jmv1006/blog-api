@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   PostPage,
 } from "./post_page_styles";
@@ -12,21 +12,24 @@ import PostInfo from "./post-info/post-info";
 
 const PostPageContainer = () => {
   const params = useParams();
+  const navigate = useNavigate();
+
   const { userInfo, authToken } = useContext(AuthContext);
   const { handleFetch } = useFetch();
 
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState(null);
+  const [error, setError] = useState(false);
 
   const [user, setUser] = userInfo;
   const [token, setToken] = authToken;
 
   useEffect(() => {
-    fetchPosts()
+    fetchPost()
     fetchComments()
   }, [])
 
-  const fetchPosts = () => {
+  const fetchPost = () => {
     handleFetch(`/posts/${params.postId}`)
     fetch(`/posts/${params.postId}`)
     .then(res => {
@@ -38,7 +41,7 @@ const PostPageContainer = () => {
     .then(res => {
       setPost(res)
     })
-    .catch(error => console.log(error))
+    .catch(error => setError(true))
   }
 
   const fetchComments = () => {
@@ -58,8 +61,9 @@ const PostPageContainer = () => {
 
   return (
     <PostPage>
+      {error && navigate("/error")}
       <PostInfo post={post} />
-      <PostComments post={post} user={user} comments={comments}/>
+      <PostComments post={post} user={user} comments={comments} token={token} fetchComments={fetchComments}/>
     </PostPage>
   );
 };
