@@ -22,7 +22,7 @@ describe("Comments Container", () => {
         <CommentsComponent user={false} comments={[]} />
       </BrowserRouter>
     );
-    expect(screen.getByText("Sign In To Post Comments!"));
+    expect(screen.getByText("Sign In"));
   });
 
   it("allows signed in user to create a comment", () => {

@@ -5,8 +5,8 @@ import {
   SignInForm,
   SignInTitle,
   SignInInputBox,
-  SignInFormButton,
 } from "./sign_in_styles";
+import { StyledButton } from "../global-styles";
 import AuthContext from "../../contexts/context";
 import useAuth from "../../hooks/useAuth";
 
@@ -15,29 +15,23 @@ const SignInPage = () => {
   const { userInfo, authToken } = useContext(AuthContext);
 
   const [user, createUser] = userInfo;
-  const [token, setToken] = authToken;
+  const [setToken] = authToken;
 
-  const { isLoading, error, returnedUser, signIn } = useAuth();
+  const { error, returnedUser, signIn } = useAuth();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [signInMessage, setSignInMessage] = useState("Sign In");
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    switch (e.target.name) {
-      case "username":
-        setUsername(value);
-        break;
-      case "password":
-        setPassword(value);
-        break;
+  useEffect(() => {
+    if (user) {
+      Navigate("/");
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (returnedUser) {
-      console.log(returnedUser)
+      console.log(returnedUser);
       setSignInMessage("Success");
       createUser(returnedUser.user);
       setToken(returnedUser.token);
@@ -51,6 +45,18 @@ const SignInPage = () => {
     }
   }, [error]);
 
+  const handleChange = (e) => {
+    const value = e.target.value;
+    switch (e.target.name) {
+      case "username":
+        setUsername(value);
+        break;
+      case "password":
+        setPassword(value);
+        break;
+    }
+  };
+
   const handleSignIn = (e) => {
     e.preventDefault();
     const body = {
@@ -63,7 +69,7 @@ const SignInPage = () => {
 
   return (
     <SignInFormContainer>
-      <SignInTitle>Sign In Here</SignInTitle>
+      <SignInTitle>Sign In</SignInTitle>
       <SignInForm onSubmit={handleSignIn}>
         <SignInInputBox
           type="email"
@@ -85,7 +91,7 @@ const SignInPage = () => {
         {error && error.status === 400
           ? "Incorrect Username or Password"
           : null}
-        <SignInFormButton type="submit">{signInMessage}</SignInFormButton>
+        <StyledButton type="submit">{signInMessage}</StyledButton>
       </SignInForm>
     </SignInFormContainer>
   );

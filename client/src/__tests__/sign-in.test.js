@@ -41,7 +41,7 @@ describe("Sign In Page", () => {
     const button = screen.getByRole("button", { name: "Sign In" });
     userEvent.click(button);
 
-    expect(screen.findByText("Signing In..."))
+    expect(screen.getByText("Signing In..."))
   });
 
   it("succesfully handles user input", () => {

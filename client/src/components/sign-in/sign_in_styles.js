@@ -30,8 +30,3 @@ export const SignInInputBox = styled.input`
     width: 15rem;
     height: 2rem;
 `
-
-export const SignInFormButton = styled.button`
-    width: 12rem;
-    height: 2.5rem;
-`

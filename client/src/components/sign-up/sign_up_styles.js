@@ -10,20 +10,14 @@ export const SignUpPageContainer = styled.div`
 
 export const SignUpForm = styled.div`
     width: 95%;
-    height: 95%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    gap: 1.5rem;
+    gap: 1.25rem;
 `
 
 export const SignUpInputBox = styled.input`
     width: 15rem;
     height: 2rem;
-`
-
-export const SignUpFormButton = styled.button`
-    width: 12rem;
-    height: 2.5rem;
 `

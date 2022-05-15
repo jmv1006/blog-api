@@ -18,6 +18,7 @@ root.render(
         <Route path='/sign-in' element={<SignInPage />} />
         <Route path='/sign-up' element={<SignUpPage />} />
         <Route path='/error' element={<Error />} />
+        <Route path='*' element={<Error />} />
       </Route>
     </Routes>
   </BrowserRouter>

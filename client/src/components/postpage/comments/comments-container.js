@@ -3,7 +3,6 @@ import Comment from "./comment";
 import { useParams, Link } from "react-router-dom";
 import CreateCommentComponent from "./create-comment-form";
 const PostComments = (props) => {
-  const params = useParams();
 
   const comments = () => {
     if (props.comments) {
@@ -23,7 +22,7 @@ const PostComments = (props) => {
         </CreateCommentContainer>
       );
     }
-    return "Sign In To Post Comments!";
+    return <div><Link to="/sign-in">Sign In</Link> To Post Comments</div>;
   };
 
   return (

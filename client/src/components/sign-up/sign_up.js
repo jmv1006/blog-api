@@ -2,8 +2,8 @@ import {
   SignUpPageContainer,
   SignUpForm,
   SignUpInputBox,
-  SignUpFormButton,
 } from "./sign_up_styles";
+import { StyledButton } from '../global-styles';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
@@ -87,9 +87,9 @@ const SignUpPage = () => {
           required
         ></SignUpInputBox>
         {error ? "Error Signing Up" : null}
-        <SignUpFormButton onClick={handleSignUp}>
+        <StyledButton onClick={handleSignUp}>
           {submitMessage}
-        </SignUpFormButton>
+        </StyledButton>
       </SignUpForm>
     </SignUpPageContainer>
   );
