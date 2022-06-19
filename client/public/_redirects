@@ -1,0 +1,5 @@
+/posts/* https://jmv1006-blog-api.herokuapp.com/posts/:splat 200
+/auth/* https://jmv1006-blog-api.herokuapp.com/auth/:splat 200
+/user/* https://jmv1006-blog-api.herokuapp.com/users/:splat 200
+/* index.html 200
+
